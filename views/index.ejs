@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs - <%= title %></title>
+</head>
+<body>
+  <h3>Blogs</h3>
+  <% articles.forEach(article => { %>
+    <h3><%= article.title %></h3>
+    <div><%= article.createdAt.toLocaleDateString() %></div>
+    <div><%= article.author %></div>
+    <p><%= article.description %></p>
+  <% }) %>
+</body>
+</html>
