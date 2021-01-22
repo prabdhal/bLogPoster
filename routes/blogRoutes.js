@@ -9,6 +9,12 @@ router.get('/', async (req, res) => {
   res.render('index', { title: 'Home', articles });
 });
 
+router.get('/view/:id', async (req, res) => {
+  const article = await Article.findById(req.params.id);
+
+  res.render('view', { title: 'View Article', article });
+});
+
 // get new article page
 router.get('/new', async (req, res) => {
   res.render('new', { title: 'New Article', article: new Article() });
@@ -35,7 +41,7 @@ router.post('/new', async (req, res) => {
   const saveArticle = await article.save((err, result) => {
     if (err) console.log(err);
     else console.log('article successfully saved!' + result);
-    res.redirect('/blogs');
+    res.redirect(`/blogs/view/${article._id}`);
   });
 });
 
@@ -53,7 +59,7 @@ router.put('/edit/:id', async (req, res) => {
   const saveArticle = await article.save((err, result) => {
     if (err) console.log(err);
     else console.log('article successfully saved!' + result);
-    res.redirect('/blogs');
+    res.redirect(`/blogs/view/${article._id}`);
   });
 });
 
