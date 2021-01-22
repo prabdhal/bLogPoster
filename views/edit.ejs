@@ -7,6 +7,8 @@
 </head>
 <body>
   <h3>Edit Article</h3>
-  <%- include('./_article_form.ejs')%>
+  <form class="article-form" action="/blogs/edit/<%= article._id %>?_method=PUT" method="POST">
+    <%- include('./_article_form.ejs')%>
+  </form>
 </body>
 </html>

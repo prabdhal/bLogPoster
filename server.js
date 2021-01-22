@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(methodOverride());
+app.use(methodOverride('_method'));
 
 // Routes
 app.get('/', (req, res) => {
