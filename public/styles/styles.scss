@@ -4,6 +4,147 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+button {
+  font-size: var(--smallFont);
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  font-family: 'Roboto', sans-serif;
+  font-size: var(--smallFont);
+  text-align: center;
+}
+
+.article-container {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+}
+
+:root {
+  --primaryColor: blue;
+  --secondaryColor: lightblue;
+  --complementaryColor: grey;
+  --dangerColor: red;
+  --warningColor: lightcoral;
+  --successColor: green;
+  --smallFont: 0.8rem;
+  --regularFont: 1rem;
+  --mediumFont: 1.5rem;
+  --largeFont: 2rem;
+  --hugeFont: 3rem;
+}
+
+.primary-color-bg {
+  background-color: var(--primaryColor);
+}
+
+.secondary-color-bg {
+  background-color: var(--secondaryColor);
+}
+
+.complementary-color-bg {
+  background-color: var(--complementaryColor);
+}
+
+.danger-color-bg {
+  background-color: var(--dangerColor);
+}
+
+.warning-color-bg {
+  background-color: var(--warningColor);
+}
+
+.success-color-bg {
+  background-color: var(--successColor);
+}
+
+//############################################## GENERAL STYLING ##############################################//
+.main-header {
+  font-size: var(--largeFont);
+  margin: 0 auto;
+}
+
+.new-article-btn {
+  max-width: 100px;
+  max-height: 30px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  text-align: center;
+  margin: 30px auto 10px auto;
+  color: white;
+  background-color: var(--primaryColor);
+  cursor: pointer;
+}
+
+.back-btn {
+  width: 75px;
+  max-height: 25px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: var(--warningColor);
+  cursor: pointer;
+}
+
+.edit-btn {
+  width: 75px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: var(--successColor);
+  cursor: pointer;
+}
+.del-btn {
+  border: 0;
+  outline: 0;
+  width: 75px;
+  height: 25px;
+  padding: 0 10px;
+  border-radius: 2px;
+  margin: 5px 0;
+  color: white;
+  background-color: var(--dangerColor);
+  cursor: pointer;
+}
+
+.submit-btn {
+  border: 0;
+  outline: 0;
+  width: 75px;
+  height: 25px;
+  padding: 0 10px;
+  border-radius: 2px;
+  margin: 5px 0;
+  color: white;
+  background-color: var(--successColor);
+  cursor: pointer;
+}
+
+.cancel-btn {
+  width: 75px;
+  padding: 0 10px;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.del-edit-btn-container {
+  width: 75px;
+  display: flex;
+  flex-direction: row;
+}
+
 @import 'Navbar';
 @import 'Home';
 @import 'Article';

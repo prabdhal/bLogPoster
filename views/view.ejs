@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./_head.ejs') %>
   <title>Blogs - <%= title %></title>
 </head>
 <body>
-  <h2><%= article.title %></h2>
-  <div><%= article.createdAt.toLocaleDateString() %></div>
-  <div><%= article.author %></div>
-  <p><%= article.markdown %></p>
-  <a href="/blogs">Back</a>
-  <a href="/blogs/edit/<%= article._id %>">Edit</a>
-  <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
-    <button type="submit">Delete</button>
-  </form>
+  <section class="article-section">
+    <div class="view-article-btns">
+      <a class="back-btn warning-color-bg" href="/blogs">Back</a>
+      <div class="del-edit-btn-container">
+        <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
+        <form class="delete-form" action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
+          <button class="del-btn" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    <main class="view-article">
+      <h2 class="article-title"><%= article.title %></h2>
+      <div class="article-author"><img class="author-img" src="../imgs/Prabdeep.png"><div><%= article.author %></div></div>
+      <div class="article-date">Updated on: <%= article.createdAt.toLocaleDateString() %></div>
+      <div class="article-markdown"><%= article.markdown %></div>
+    </main>
+  </section>
+  
 </body>
 </html>

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./_head.ejs') %>
   <title>Blogs - <%= title%></title>
 </head>
 <body>
-  <h3>New Article</h3>
-  <form class="article-form" method="POST" action="/blogs/new">
-    <%- include('./_article_form.ejs')%>
-  </form>
+  <main class="article-section">
+    <h3 class="main-header">New Article</h3>
+    <form class="article-form" method="POST" action="/blogs/new">
+      <%- include('./_article_form.ejs')%>
+    </form>
+  </main>
 </body>
 </html>
