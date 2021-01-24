@@ -1,11 +1,11 @@
 <label>Title</label>
-<input required type="text" name="title" value="<%= article.title %>">
+<input required type="text" name="title" id="title"value="<%= article.title %>">
 <label>Author</label>
-<input required type="text" name="author" value="<%= article.author %>">
+<input required type="text" name="author" id="author"value="<%= article.author %>">
 <label>Description</label>
-<textarea required type="text" name="description"><%= article.description%></textarea>
+<textarea required type="text" name="description" id="description"><%= article.description%></textarea>
 <label>Markdown</label>
-<textarea required type="text" name="markdown"><%= article.markdown%></textarea>
+<textarea required type="text" name="markdown" id="markdown"><%= article.markdown%></textarea>
 <div class="submit-cancel-btn-container">
   <button class="submit-btn" type="submit">Submit</button>
   <a class="cancel-btn" href="/blogs">Cancel</a>

@@ -5,24 +5,54 @@
   <title>Blogs - <%= title %></title>
 </head>
 <body>
-  <main class="blogs-section">
+  <%- include('./_navbar.ejs')%>
+  <main class="page-section">
     <h3 class="main-header">Educational Blogs</h3>
-    <a class="new-article-btn primary-color-bg" href="/blogs/new">New Article</a>
     <% articles.forEach(article => { %>
-      <div class="article-container">
-        <div class="article-information">
-          <h4 class="article-title"><a href="/blogs/view/<%= article._id %>"><%= article.title %></a></h4>
-          <div class="article-author"><img class="author-img" src="../imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.author %></div></div>
-          <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
-          <div class="article-description"><%= article.description %></div>
+      <% if (user) { %>
+        <% if (article.publish && !user.admin) { %>
+        <div class="article-container">
+          <div class="article-information">
+            <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+            <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.author %></div></div>
+            <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+            <div class="article-description"><%= article.description %></div>
+          </div>
         </div>
-        <div class="del-edit-btn-container">
-          <a class="edit-btn success-color-bg" href="/blogs/edit/<%= article._id %>">Edit</a>
-          <form class="delete-form" action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
-            <button class="del-btn" type="submit">Delete</button>
-          </form>
+        <% } else if (user.admin) { %>
+          <a class="new-article-btn primary-color-bg" href="/blogs/new">New Article</a>
+          <div class="article-container">
+            <div class="article-information">
+              <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+              <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.author %></div></div>
+              <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+              <div class="article-description"><%= article.description %></div>
+            </div>
+            <div class="del-edit-btn-container">
+              <a class="edit-btn success-color-bg" href="/blogs/edit/<%= article._id %>">Edit</a>
+              <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
+                <% if (article.published) { %>
+                  <button class="publish-btn complementary-color-bg" type="submit">Unpublish</button>
+                <% } else { %>
+                  <button class="publish-btn" type="submit">Publish</button>
+                <% } %>
+              </form>
+              <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
+                <button class="del-btn" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% } %> 
+      <% } else if (article.published && !user) { %>
+        <div class="article-container">
+          <div class="article-information">
+            <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+            <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.author %></div></div>
+            <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+            <div class="article-description"><%= article.description %></div>
+          </div>
         </div>
-      </div>
+      <% } %>
     <% }) %>
   </main>
 </body>

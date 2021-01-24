@@ -5,6 +5,7 @@
   <title>Blogs - <%= title%></title>
 </head>
 <body>
+  <%- include('./_navbar.ejs')%>
   <main class="article-section">
     <h3 class="main-header">New Article</h3>
     <form class="article-form" method="POST" action="/blogs/new">

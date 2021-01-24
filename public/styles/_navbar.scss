@@ -1,0 +1,35 @@
+nav {
+  display: flex;
+  height: 80px;
+  padding: 5px;
+}
+
+.nav-links {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  margin: auto 0;
+  list-style: none;
+}
+
+.nav-link li {
+  display: flex;
+  margin: auto 0;
+}
+
+a.nav-link,
+.nav-link {
+  display: flex;
+  color: black;
+  font-size: var(--regularFont);
+  text-decoration: none;
+  padding: 8px;
+  margin: auto 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  opacity: 0.5;
+}

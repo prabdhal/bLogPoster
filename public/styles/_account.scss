@@ -1,0 +1,34 @@
+.account-form {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 auto;
+  padding: 30px 15px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  label {
+    margin: 20px 0 10px 0;
+  }
+
+  input {
+    padding: 8px;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px;
+  }
+}
+
+.account-section {
+  text-align: center;
+  h3 {
+    margin: 20px 0 10px 0;
+    font-weight: 500;
+  }
+}

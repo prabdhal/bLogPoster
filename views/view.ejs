@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <%- include('./_head.ejs') %>
-  <title>Blogs - <%= title %></title>
+  <title>Blogs - <%= article.title %></title>
 </head>
 <body>
+  <%- include('./_navbar.ejs')%>
   <section class="article-section">
     <div class="view-article-btns">
       <a class="back-btn warning-color-bg" href="/blogs">Back</a>
@@ -17,9 +18,9 @@
     </div>
     <main class="view-article">
       <h2 class="article-title"><%= article.title %></h2>
-      <div class="article-author"><img class="author-img" src="../imgs/Prabdeep.png"><div><%= article.author %></div></div>
+      <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png"><div><%= article.author %></div></div>
       <div class="article-date">Updated on: <%= article.createdAt.toLocaleDateString() %></div>
-      <div class="article-markdown"><%= article.markdown %></div>
+      <div class="article-markdown"><%- article.sanitizedHtml %></div>
     </main>
   </section>
   

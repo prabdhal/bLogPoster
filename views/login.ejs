@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./_head.ejs') %>
+  <title>Blogs - <%= title %></title>
+</head>
+<body>
+  <%- include('./_navbar.ejs')%>
+  <form class="account-form" action="/account/login" method="POST">
+    <h2>Login</h2>
+    <%- include('./_messages.ejs')%>
+    <label>Username</label>
+    <input type="text" name="username" placeholder="username">
+    <label>Password</label>
+    <input type="password" name="password" placeholder="password">
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./_head.ejs') %>
+  <title>Blogs - <%= title %></title>
+</head>
+<body>
+  <%- include('./_navbar.ejs')%>
+  <section class="page-section">
+    <h3 class="main-header">Account</h3>
+    <main class="account-section">
+      <h3>Welcome, <%= user.username %></h3>
+      <% if (user.admin) { %>
+        <label>User Role: Admin</label>
+      <% } else { %>
+        <label>User Role: User</label>
+      <% } %>
+    </main>
+  </section>
+</body>
+</html>

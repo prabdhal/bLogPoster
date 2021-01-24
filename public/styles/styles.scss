@@ -27,7 +27,7 @@ a {
 
 :root {
   --primaryColor: blue;
-  --secondaryColor: lightblue;
+  --secondaryColor: rgb(55, 186, 230);
   --complementaryColor: grey;
   --dangerColor: red;
   --warningColor: lightcoral;
@@ -37,30 +37,6 @@ a {
   --mediumFont: 1.5rem;
   --largeFont: 2rem;
   --hugeFont: 3rem;
-}
-
-.primary-color-bg {
-  background-color: var(--primaryColor);
-}
-
-.secondary-color-bg {
-  background-color: var(--secondaryColor);
-}
-
-.complementary-color-bg {
-  background-color: var(--complementaryColor);
-}
-
-.danger-color-bg {
-  background-color: var(--dangerColor);
-}
-
-.warning-color-bg {
-  background-color: var(--warningColor);
-}
-
-.success-color-bg {
-  background-color: var(--successColor);
 }
 
 //############################################## GENERAL STYLING ##############################################//
@@ -101,10 +77,25 @@ a {
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
+  margin: 5px 0;
   color: white;
   background-color: var(--successColor);
   cursor: pointer;
 }
+
+.publish-btn {
+  border: 0;
+  outline: 0;
+  width: 75px;
+  height: 25px;
+  padding: 0 10px;
+  border-radius: 2px;
+  margin: 5px 0;
+  color: white;
+  background-color: var(--secondaryColor);
+  cursor: pointer;
+}
+
 .del-btn {
   border: 0;
   outline: 0;
@@ -145,6 +136,42 @@ a {
   flex-direction: row;
 }
 
+.page-section {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 2%;
+}
+
 @import 'Navbar';
 @import 'Home';
 @import 'Article';
+@import 'Account';
+
+// COLORS
+
+.primary-color-bg {
+  background-color: var(--primaryColor);
+}
+
+.secondary-color-bg {
+  background-color: var(--secondaryColor);
+}
+
+.complementary-color-bg {
+  background-color: var(--complementaryColor);
+}
+
+.danger-color-bg {
+  background-color: var(--dangerColor);
+}
+
+.warning-color-bg {
+  background-color: var(--warningColor);
+}
+
+.success-color-bg {
+  background-color: var(--successColor);
+}

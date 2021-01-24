@@ -5,6 +5,7 @@
   <title>Blogs - <%= title%></title>
 </head>
 <body>
+  <%- include('./_navbar.ejs')%>
   <main class="article-section">
     <h3 class="main-header">Edit Article</h3>
     <form class="article-form" action="/blogs/edit/<%= article._id %>?_method=PUT" method="POST">
