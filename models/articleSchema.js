@@ -39,30 +39,6 @@ const articleSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  comments: [
-    {
-      author: {
-        type: String,
-        required: true,
-      },
-      comment: {
-        type: String,
-        required: true,
-      },
-      likes: {
-        type: Number,
-        default: 0,
-      },
-      replies: {
-        type: Array,
-        defauly: null,
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
 });
 
 articleSchema.pre('validate', function (next) {

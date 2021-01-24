@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const commentSchema = mongoose.Schema({
+  blogRef: {
+    type: String,
+    required: true,
+  },
   author: {
     type: String,
     required: true,
@@ -9,9 +13,8 @@ const commentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
+  usersLiked: {
+    type: Array,
   },
   replies: {
     type: Array,

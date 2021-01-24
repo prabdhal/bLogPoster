@@ -8,6 +8,11 @@
   <%- include('./_navbar.ejs')%>
   <main class="page-section">
     <h3 class="main-header">Educational Blogs</h3>
+    <% if (user) { %>
+      <% if (user.admin) { %>
+        <a class="new-article-btn primary-color-bg" href="/blogs/new">New Article</a>
+      <% } %>
+    <% } %>
     <% articles.forEach(article => { %>
       <% if (user) { %>
         <% if (article.publish && !user.admin) { %>
@@ -20,7 +25,6 @@
             </div>
           </div>
         <% } else if (user.admin) { %>
-          <a class="new-article-btn primary-color-bg" href="/blogs/new">New Article</a>
           <div class="article-container">
             <div class="article-information">
               <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
