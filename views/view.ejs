@@ -22,6 +22,39 @@
       <div class="article-date">Updated on: <%= article.createdAt.toLocaleDateString() %></div>
       <div class="article-markdown"><%- article.sanitizedHtml %></div>
     </main>
+    <section class="comments-section">
+      <br><br><br>
+      <form class="account-form" action="/blogs/view/<%= article.slug %>/comment" method="POST">
+        <%- include('./_comment_form.ejs') %>
+      </form>
+      <% comments.forEach(comment => { %>
+        <div class="comment-box-container">
+          <div class="comment-info">
+            <div><%= comment.author %></div>
+            <div><%= comment.createdAt.toLocaleDateString() %></div>
+            <div><%= comment.comment %></div>
+          </div>
+          <div class="comments-btn-containers">
+            <div class="del-edit-btn-container">
+              <form action="/blogs/comment/edit?_method=PUT" method="POST">
+                <button type="submit" class="edit-btn">Edit</button>
+              </form>
+              <form action="/blogs/comment?_method=DELETE" method="POST">
+                <button type="submit" class="del-btn">Delete</button>
+              </form>
+            </div>
+            <div class="comment-btn-container">
+              <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
+                <button type="submit" class="like-btn">Like <%= comment.likes %></button>
+              </form>
+              <form action="/blogs/view/<%= article.slug %>/comment/reply?_method=PUT" method="POST">
+                <button type="submit" class="reply-btn">Reply</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </section>
   </section>
   
 </body>

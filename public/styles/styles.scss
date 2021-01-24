@@ -133,7 +133,33 @@ a {
 .del-edit-btn-container {
   width: 75px;
   display: flex;
+  flex-direction: column;
+}
+.comment-box-container {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.comment-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.comments-btn-containers {
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.comment-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .page-section {

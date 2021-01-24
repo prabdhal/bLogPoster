@@ -1,0 +1,7 @@
+<label>Add Comment</label>
+<textarea required type="text" name="comment" id="comment"></textarea>
+<% if (!user) { %>
+<a href="/account/login">Add Comment</a>
+<% } else { %>
+<button type="submit">Add Comment</button>
+<% } %>

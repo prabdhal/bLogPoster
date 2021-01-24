@@ -11,14 +11,14 @@
     <% articles.forEach(article => { %>
       <% if (user) { %>
         <% if (article.publish && !user.admin) { %>
-        <div class="article-container">
-          <div class="article-information">
-            <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-            <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.author %></div></div>
-            <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
-            <div class="article-description"><%= article.description %></div>
+          <div class="article-container">
+            <div class="article-information">
+              <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+              <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.author %></div></div>
+              <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+              <div class="article-description"><%= article.description %></div>
+            </div>
           </div>
-        </div>
         <% } else if (user.admin) { %>
           <a class="new-article-btn primary-color-bg" href="/blogs/new">New Article</a>
           <div class="article-container">
