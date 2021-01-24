@@ -32,6 +32,7 @@
               <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
               <div class="article-description"><%= article.description %></div>
             </div>
+            <% if (user.username == article.createdUsername) { %>
             <div class="del-edit-btn-container">
               <a class="edit-btn success-color-bg" href="/blogs/edit/<%= article._id %>">Edit</a>
               <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
@@ -45,6 +46,7 @@
                 <button class="del-btn" type="submit">Delete</button>
               </form>
             </div>
+            <% } %>
           </div>
         <% } %> 
       <% } else if (article.published && !user) { %>

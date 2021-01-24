@@ -18,7 +18,8 @@ router.get('/view/:slug', async (req, res) => {
 
   for (i = 0; i < allComments.length; i++) {
     if (allComments[i].blogRef == article._id) {
-      comments = allComments[i];
+      comments.push(allComments[i]);
+      console.log(`comments for this blog post are ${comments}`);
     }
   }
   console.log(comments);
@@ -27,7 +28,7 @@ router.get('/view/:slug', async (req, res) => {
     title: 'View Article',
     article,
     user: req.user,
-    comments: allComments,
+    comments,
   });
 });
 
@@ -50,12 +51,14 @@ router.get('/edit/:id', async (req, res) => {
 // create new article
 router.post('/new', async (req, res) => {
   const { title, author, description, markdown } = req.body;
+  const user = req.user;
 
   const article = new Article({
     title,
     author,
     description,
     markdown,
+    createdUsername: user.username,
   });
 
   const saveArticle = await article.save((err, result) => {
@@ -64,7 +67,7 @@ router.post('/new', async (req, res) => {
       res.render('new', {
         title: 'New Article',
         article: new Article(),
-        user: req.user,
+        user,
       });
     } else {
       console.log('article successfully saved!' + saveArticle);
@@ -167,22 +170,19 @@ router.put('/view/:slug/comment/:id/like', async (req, res) => {
   let authorLikedAlready = false;
   let removeIndex = null;
 
-  if (comment.usersLiked.length == 0) {
-    comment.usersLiked.push(user.username);
-    console.log(`${user.username} has liked the comment... ${comment}`);
-  } else {
-    for (i = 0; i < comment.usersLiked.length; i++) {
-      if (user.username == comment.usersLiked[i]) {
-        authorLikedAlready = true;
-        removeIndex = i;
-        console.log(
-          `The user reliking has been identified at index ${removeIndex}`
-        );
-      }
+  for (i = 0; i < comment.usersLiked.length; i++) {
+    if (user.username == comment.usersLiked[i]) {
+      authorLikedAlready = true;
+      removeIndex = i;
+      console.log(
+        `The user reliking has been identified at index ${removeIndex}`
+      );
     }
   }
+
   console.log(`authorLikedAlready: ${authorLikedAlready}`);
   if (authorLikedAlready) comment.usersLiked.splice(removeIndex, 1);
+  else comment.usersLiked.push(user.username);
 
   const saveComment = await comment.save((err, result) => {
     if (err) {
@@ -203,10 +203,12 @@ router.delete('/:id', async (req, res) => {
 });
 
 // delete comment
-router.delete('view/:slug/comment/:id', async (req, res) => {
-  const delComment = await Comment.findByIdAndDelete(req.params.id);
+router.delete('/view/:slug/comment/:id', async (req, res) => {
+  const article = await Article.findOne({ slug: req.params.slug });
+  console.log(req.params.slug);
+  await Comment.findByIdAndDelete(req.params.id);
 
-  res.redirect('/blogs');
+  res.redirect(`/blogs/view/${article.slug}`);
 });
 
 module.exports = router;

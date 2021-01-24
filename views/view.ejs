@@ -9,12 +9,16 @@
   <section class="article-section">
     <div class="view-article-btns">
       <a class="back-btn warning-color-bg" href="/blogs">Back</a>
+    <% if (user) { %>
+    <% if (user.username == article.createdUsername) { %>
       <div class="del-edit-btn-container">
         <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
         <form class="delete-form" action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
           <button class="del-btn" type="submit">Delete</button>
         </form>
       </div>
+    <% } %>
+    <% } %>
     </div>
     <main class="view-article">
       <h2 class="article-title"><%= article.title %></h2>
@@ -35,6 +39,8 @@
             <div><%= comment.comment %></div>
           </div>
           <div class="comments-btn-containers">
+          <% if (user) { %>
+          <% if (user.username == comment.author) { %>
             <div class="del-edit-btn-container">
               <form action="/blogs/comment/edit?_method=PUT" method="POST">
                 <button type="submit" class="edit-btn">Edit</button>
@@ -43,13 +49,20 @@
                 <button type="submit" class="del-btn">Delete</button>
               </form>
             </div>
+          <% } %>
+          <% } %>
             <div class="comment-btn-container">
+              <% if (!user) { %>
+              <a class="a-like-btn" href="/account/login"><%= comment.usersLiked.length %></a>
+              <a class="a-reply-btn" href="/account/login">Reply</a>
+              <% } else { %>
               <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
-                <button type="submit" class="like-btn">Like <%= comment.usersLiked.length %></button>
+                <button type="submit" class="like-btn"><%= comment.usersLiked.length %></button>
               </form>
               <form action="/blogs/view/<%= article.slug %>/comment/reply?_method=PUT" method="POST">
                 <button type="submit" class="reply-btn">Reply</button>
               </form>
+              <% } %>
             </div>
           </div>
         </div>

@@ -8,3 +8,7 @@ closeErrorButtons.forEach((button) => {
     e.target.parentElement.classList.add('hide');
   });
 });
+
+function login(user) {
+  console.log('working');
+}

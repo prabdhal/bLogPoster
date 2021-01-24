@@ -22,6 +22,9 @@ const articleSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  createdUsername: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -59,6 +59,7 @@ a {
   cursor: pointer;
 }
 
+// BUTTONS
 .back-btn {
   width: 75px;
   max-height: 25px;
@@ -130,8 +131,50 @@ a {
   cursor: pointer;
 }
 
+.like-btn {
+  outline: 0;
+  border: 0;
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  cursor: pointer;
+}
+.a-like-btn {
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reply-btn {
+  outline: 0;
+  border: 0;
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  cursor: pointer;
+}
+.a-reply-btn {
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .del-edit-btn-container {
-  width: 75px;
+  width: 80px;
   display: flex;
   flex-direction: column;
 }
@@ -141,6 +184,7 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 30px 0 20px 0;
 }
 
 .comment-info {
@@ -150,13 +194,14 @@ a {
 }
 
 .comments-btn-containers {
-  width: 75px;
+  width: 80px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .comment-btn-container {
+  width: 80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

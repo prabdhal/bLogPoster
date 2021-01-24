@@ -132,8 +132,52 @@ a {
   cursor: pointer;
 }
 
+.like-btn {
+  outline: 0;
+  border: 0;
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  cursor: pointer;
+}
+
+.a-like-btn {
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reply-btn {
+  outline: 0;
+  border: 0;
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  cursor: pointer;
+}
+
+.a-reply-btn {
+  width: 40px;
+  height: 21px;
+  background-color: #ccc;
+  padding: 2px 3px;
+  margin: 0 1px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .del-edit-btn-container {
-  width: 75px;
+  width: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -156,6 +200,7 @@ a {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  margin: 30px 0 20px 0;
 }
 
 .comment-info {
@@ -170,7 +215,7 @@ a {
 }
 
 .comments-btn-containers {
-  width: 75px;
+  width: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -178,12 +223,13 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .comment-btn-container {
+  width: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
