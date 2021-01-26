@@ -1,15 +1,21 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/userSchema');
-const SecretCode = require('../models/secretCodeSchema');
+const VerifyAccount = require('../models/verifyCodeSchema');
 const { checkAuthenticated, checkNotAuthenticated } = require('../config/auth');
 const passport = require('passport');
-const transporter = require('../config/email');
+const transporter = require('../config/nodemailer');
 
 const router = require('express').Router();
 
 router.get('/', checkAuthenticated, async (req, res) => {
   let errors = [];
-  res.render('account', { title: 'Account', errors, user: req.user });
+  const user = req.user;
+
+  res.render('account', { title: 'Account', errors, user });
+});
+
+router.get('/forgot-account', (req, res) => {
+  res.render('account-reset');
 });
 
 router.get('/register', checkNotAuthenticated, async (req, res) => {
@@ -20,6 +26,38 @@ router.get('/register', checkNotAuthenticated, async (req, res) => {
 router.get('/login', checkNotAuthenticated, (req, res) => {
   let errors = [];
   res.render('login', { title: 'Login', errors, user: req.user });
+});
+
+router.get('/verify-account/:userId/:verifyCode', async (req, res) => {
+  const user = await User.findOne({ _id: req.params.userId });
+
+  // verification code does not exist
+  const verify = await VerifyAccount.findOne({ email: user.email });
+  if (!verify) {
+    req.flash(
+      'error_msg',
+      'Your activation link is invalid, try sending a new validation code'
+    );
+    return res.redirect('/account');
+  }
+
+  // verification code does not match
+  if (verify.code !== req.params.verifyCode) {
+    req.flash(
+      'error_msg',
+      'Verification code does not match, try sending a new validation code'
+    );
+
+    return res.redirect('/account');
+  }
+
+  // user account active
+  user.active = true;
+  await user.save();
+  await VerifyAccount.findOneAndDelete({ email: user.email });
+
+  req.flash('success_msg', 'You have successfully verified your account');
+  res.redirect('/account');
 });
 
 router.post('/register', checkNotAuthenticated, async (req, res) => {
@@ -69,63 +107,48 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
     password: hashedPassword,
     admin,
   });
-  const secretCode = new SecretCode({
+  const verifyCode = new VerifyAccount({
     email,
-    code: makeid(5),
+    code: makeid(6),
   });
 
-  let baseUrl = 'http://localhost:3000';
-  let mailOptions = {
-    from: 'automailer.email@gmail.com',
-    to: `${email}`,
-    subject: 'Email verification for blog website',
-    text: `Click the following link to verify your email: ${baseUrl}/api/auth/verification/verify-account/${user._id}/${secretCode.code}`,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+  mailVerificationCode(user, verifyCode, email);
 
   const savedUser = await user.save();
-  const savedCode = await secretCode.save();
-  res.render('verify', { title: 'verification', user, secretCode });
-});
+  const savedCode = await verifyCode.save();
 
-router.get('/verify', checkAuthenticated, async (req, res) => {
-  let baseUrl = 'http://localhost:3000';
-  let mailOptions = {
-    from: process.env.GMAIL_USER,
-    to: email,
-    subject: 'Email verification for blog website',
-    text: `Click the following link to verify your email: ${baseUrl}/api/auth/verification/verify-account/${user._id}/${secretCode.code}`,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+  req.flash(
+    'success_msg',
+    'Verification code has been sent to your registered email'
+  );
+  res.redirect('/account/login');
 });
 
 router.post('/login', checkNotAuthenticated, async (req, res, next) => {
-  const { username } = req.body;
-  const user = await User.findOne({ username });
-  if (user.status == 'pending') {
-    res.render('verify', { title: 'verification', user, secretCode });
-    return;
-  }
-
   passport.authenticate('local', {
     successRedirect: '/account',
     failureRedirect: '/account/login',
     failureFlash: true,
   })(req, res, next);
+});
+
+router.post('/resend/verification-code/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  console.log(user);
+
+  // delete old verification codes
+  await VerifyAccount.deleteMany({ email: user.email });
+
+  // create new verification code
+  const verify = new VerifyAccount({
+    email: user.email,
+    code: makeid(6),
+  });
+
+  await verify.save();
+  mailVerificationCode(user, verify, user.email);
+
+  res.redirect('/account');
 });
 
 router.get('/logout', checkAuthenticated, async (req, res) => {
@@ -137,6 +160,8 @@ router.get('/logout', checkAuthenticated, async (req, res) => {
 // delete account
 router.delete('/delete/:id', async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
+
+  res.redirect('/');
 });
 
 // make random id
@@ -151,4 +176,66 @@ function makeid(length) {
   return result;
 }
 
+function mailVerificationCode(user, verify, email) {
+  let link = `http://localhost:3000/account/verify-account/${user._id}/${verify.code}`;
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: `${email}`,
+    subject: 'Email verification for blog website',
+    text: `Click the following link to verify your email: ${link}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+function mailResetPassword(user, verify, email) {
+  let link = `http://localhost:3000/account/reset-password/${user._id}/${verify.code}`;
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: `${email}`,
+    subject: 'Email verification for blog website',
+    text: `Click the following link to reset your password: ${link}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+router.get('/reset-password/:userId/:code', async (req, res) => {
+  const user = await User.findOne({ _id: req.params.userId });
+
+  // verification code does not exist
+  const verify = await VerifyAccount.findOne({ email: user.email });
+  if (!verify) {
+    req.flash('error_msg', 'Your activation link is invalid');
+    return res.redirect('/account/login');
+  }
+
+  // verification code does not match
+  if (verify.code !== req.params.verifyCode) {
+    req.flash('error_msg', 'Your verification code does not match');
+    return res.redirect('/account/login');
+  }
+
+  // user account active
+  user.active = true;
+  await user.save();
+  await VerifyAccount.findOneAndDelete({ email: user.email });
+
+  req.flash('success_msg', 'You have successfully verified your account');
+  res.redirect('/account');
+});
 module.exports = router;

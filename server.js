@@ -7,8 +7,6 @@ const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const passport = require('passport');
-const User = require('./models/userSchema');
-const SecretCode = require('./models/secretCodeSchema');
 
 const blogRoutes = require('./routes/blogRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -57,32 +55,5 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.redirect('/blogs');
 });
-app.post(
-  'http://localhost:3000/api/auth/verification/verify-account/:userId/:secretCode',
-  async (req, res) => {
-    const { userId, secretCode } = req.params;
-    const user = await User.findOne(req.params.userID);
-    if (user == null) {
-      console.log(`user does not exist`);
-      res.render('verify', { title: 'Verification' });
-      return;
-    }
-    const secret = await SecretCode.findOne({ email: user.email });
-    if (secret == null) {
-      console.log(`secret does not exist`);
-      res.render('verify', { title: 'Verification' });
-      return;
-    }
-
-    // validation
-    console.log(
-      `the posted code is ${secret.code} and the actual secret code is ${secretCode}`
-    );
-    if (secret.code !== secretCode) return;
-    user.status = 'active';
-
-    res.redirect('/account');
-  }
-);
 app.use('/blogs', blogRoutes);
 app.use('/account', userRoutes);

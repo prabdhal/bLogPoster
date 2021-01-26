@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const secretCode = mongoose.Schema({
+const verifyAccountSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -16,6 +16,6 @@ const secretCode = mongoose.Schema({
   },
 });
 
-const SecretCode = mongoose.model('SecretCode', secretCode);
+const VerifyAccount = mongoose.model('VerifyAccount', verifyAccountSchema);
 
-module.exports = SecretCode;
+module.exports = VerifyAccount;

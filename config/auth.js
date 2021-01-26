@@ -16,4 +16,16 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
-module.exports = { checkAuthenticated, checkNotAuthenticated };
+// allows only verified users to access specific routes
+function checkValidated(req, res, next) {
+  if (req.user) {
+    if (!req.user.active) {
+      console.log('the user is not active');
+      return res.redirect('/account');
+    }
+  }
+
+  next();
+}
+
+module.exports = { checkAuthenticated, checkNotAuthenticated, checkValidated };
