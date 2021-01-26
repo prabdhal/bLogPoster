@@ -8,14 +8,14 @@
   <%- include('./_navbar.ejs')%>
   
   <main class="page-section">
-    <form class="account-form" action="/account/login" method="POST">
+    <form class="basic-form" action="/account/login" method="POST">
       <h2>Login</h2>
       <%- include('./_messages.ejs')%>
       <label>Username</label>
       <input type="text" name="username" placeholder="username">
       <label>Password</label>
       <input type="password" name="password" placeholder="password">
-      <a href="/account/forgot-account">Forgot Username or Password</a>
+      <a href="/account/account-recovery">Forgot Username or Password</a>
       <button type="submit">Submit</button>
     </form>
   </main>

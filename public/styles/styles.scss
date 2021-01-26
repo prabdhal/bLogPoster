@@ -164,6 +164,7 @@ a {
   border-radius: var(--btnRadius);
   margin: 10px 0;
   color: var(--secondaryColor);
+  background-color: transparent;
   border: 2px solid var(--secondaryColor);
   transition: var(--btnTransition);
   cursor: pointer;

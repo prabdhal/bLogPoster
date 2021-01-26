@@ -189,6 +189,7 @@ a {
   border-radius: var(--btnRadius);
   margin: 10px 0;
   color: var(--secondaryColor);
+  background-color: transparent;
   border: 2px solid var(--secondaryColor);
   -webkit-transition: var(--btnTransition);
   transition: var(--btnTransition);
@@ -520,8 +521,8 @@ nav div a:hover {
   margin: 5px auto 10px auto;
 }
 
-.account-form {
-  max-width: 500px;
+.basic-form {
+  max-width: var(--baseWidth);
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -532,44 +533,41 @@ nav div a:hover {
           flex-direction: column;
   text-align: center;
   margin: 0 auto;
-  padding: 30px 15px;
 }
 
-.account-form h2 {
-  margin-bottom: 20px;
-}
-
-.account-form label {
+.basic-form label {
   margin: 20px 0 10px 0;
 }
 
-.account-form input {
+.basic-form input {
   padding: var(--inputPadding);
   border: 0;
   outline: 0;
+  margin: 15px;
   background: -webkit-gradient(linear, left top, left bottom, from(black), to(black)) bottom/0% 2px no-repeat;
   background: linear-gradient(black, black) bottom/0% 2px no-repeat;
   -webkit-transition: var(--btnTransition);
   transition: var(--btnTransition);
 }
 
-.account-form input:hover,
-.account-form input:focus {
+.basic-form input:hover,
+.basic-form input:focus {
   background-size: 100% 2px;
 }
 
-.account-form button {
+.basic-form button {
   margin-top: 20px;
   padding: 10px;
   border-radius: var(--btnRadius);
   color: var(--successColor);
+  background-color: transparent;
   border: 2px solid var(--successColor);
   -webkit-transition: var(--btnTransition);
   transition: var(--btnTransition);
   cursor: pointer;
 }
 
-.account-form button:hover {
+.basic-form button:hover {
   color: white;
   background-color: var(--successColor);
 }
@@ -583,8 +581,73 @@ nav div a:hover {
   font-weight: 500;
 }
 
+.verification-btn {
+  outline: 0;
+  border: 0;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.del-account-btn {
+  border: 0;
+  outline: 0;
+  width: 120px;
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 100px 0;
+  color: white;
+  background-color: var(--dangerColor);
+  border: 2px solid var(--dangerColor);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.del-account-btn:hover {
+  opacity: 0.8;
+}
+
 .comments-section {
   margin: 100px 0;
+}
+
+.a-add-comment-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--btnRadius);
+  text-align: center;
+  text-decoration: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: var(--successColor);
+  border: 2px solid var(--successColor);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.a-add-comment-btn:hover {
+  color: white;
+  background-color: var(--successColor);
+}
+
+.add-comment-btn {
+  border: 0;
+  outline: 0;
+  padding: 10px;
+  border-radius: var(--btnRadius);
+  margin: 5px 0;
+  color: var(--successColor);
+  border: 2px solid var(--successColor);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.add-comment-btn:hover {
+  color: white;
+  background-color: var(--successColor);
 }
 
 .comment-box-container {
@@ -614,112 +677,10 @@ nav div a:hover {
           flex-direction: column;
 }
 
-.comments-btn-containers {
-  width: 80px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-}
-
-.comments-like-reply-btn-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
 .comment-date {
   margin-left: 15px;
   opacity: 0.8;
   font-style: oblique;
-}
-
-.comment-form {
-  max-width: var(--baseWidth);
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  text-align: center;
-  margin: 20px auto;
-}
-
-.comment-form h2 {
-  margin-bottom: 20px;
-}
-
-.comment-form label {
-  text-align: left;
-  margin: 20px 0;
-}
-
-.comment-form input {
-  padding: var(--inputPadding);
-  border: 0;
-  outline: 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(black), to(black)) bottom/0% 2px no-repeat;
-  background: linear-gradient(black, black) bottom/0% 2px no-repeat;
-  -webkit-transition: 500ms;
-  transition: 500ms;
-}
-
-.comment-form input:hover,
-.comment-form input:focus {
-  background-size: 100% 2px;
-}
-
-.comment-form .a-add-comment-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: var(--btnRadius);
-  text-align: center;
-  text-decoration: none;
-  margin: 5px 0;
-  color: var(--successColor);
-  border: 2px solid var(--successColor);
-  -webkit-transition: var(--btnTransition);
-  transition: var(--btnTransition);
-  cursor: pointer;
-}
-
-.comment-form .a-add-comment-btn:hover {
-  color: white;
-  background-color: var(--successColor);
-}
-
-.comment-form .add-comment-btn {
-  border: 0;
-  outline: 0;
-  padding: 10px;
-  border-radius: var(--btnRadius);
-  margin: 5px 0;
-  color: var(--successColor);
-  border: 2px solid var(--successColor);
-  -webkit-transition: var(--btnTransition);
-  transition: var(--btnTransition);
-  cursor: pointer;
-}
-
-.comment-form .add-comment-btn:hover {
-  color: white;
-  background-color: var(--successColor);
 }
 
 .comment-and-edit-input-container {
@@ -731,21 +692,44 @@ nav div a:hover {
   padding-bottom: 10px;
 }
 
-.comment-and-edit-input-container input {
+.comment-and-edit-input-container span form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.comment-and-edit-input-container span form input {
   width: 100%;
   padding: var(--inputPadding);
   border: 0;
   outline: 0;
-  border-bottom: 1px solid black;
   background: -webkit-gradient(linear, left top, left bottom, from(black), to(black)) bottom/0% 2px no-repeat;
   background: linear-gradient(black, black) bottom/0% 2px no-repeat;
-  -webkit-transition: 500ms;
-  transition: 500ms;
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
 }
 
-.comment-and-edit-input-container input:hover,
-.comment-and-edit-input-container input:focus {
+.comment-and-edit-input-container span form input:hover,
+.comment-and-edit-input-container span form input:focus {
   background-size: 100% 2px;
+}
+
+.comment-like-reply-btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 .like-btn {
@@ -792,7 +776,22 @@ nav div a:hover {
   cursor: pointer;
 }
 
+.comments-btn-containers {
+  width: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
 .reply-comment-form span {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -808,11 +807,15 @@ nav div a:hover {
   padding: var(--inputPadding);
   border: 0;
   outline: 0;
-  border-bottom: 1px solid black;
+  background: -webkit-gradient(linear, left top, left bottom, from(black), to(black)) bottom/0% 2px no-repeat;
+  background: linear-gradient(black, black) bottom/0% 2px no-repeat;
+  -webkit-transition: 500ms;
+  transition: 500ms;
 }
 
+.reply-comment-form span input:hover,
 .reply-comment-form span input:focus {
-  border-bottom: 2px solid black;
+  background-size: 100% 2px;
 }
 
 .reply-comment-form span button {
@@ -833,6 +836,44 @@ nav div a:hover {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin: 30px 0 40px 50px;
+}
+
+.submit-reply-btn {
+  border: 0;
+  outline: 0;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 5px 0;
+  color: var(--successColor);
+  border: 2px solid var(--successColor);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.submit-reply-btn:hover {
+  background-color: var(--successColor);
+  color: white;
+}
+
+.cancel-reply-btn {
+  border: 0;
+  outline: 0;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 5px 0;
+  color: var(--complementaryColor3);
+  border: 2px solid var(--complementaryColor3);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.cancel-reply-btn:hover {
+  background-color: var(--complementaryColor3);
+  color: white;
 }
 
 .message-container {

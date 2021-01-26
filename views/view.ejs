@@ -33,7 +33,8 @@
       <!-- article comments -->
       <section class="comments-section">
         <h2 class="sub-header">Comments</h2>
-        <form class="comment-form" action="/blogs/view/<%= article.slug %>/comment" method="POST">
+        <!-- COMMENT INPUT CONTAINER -->
+        <form class="basic-form" action="/blogs/view/<%= article.slug %>/comment" method="POST">
           <%- include('./_comment_form.ejs') %>
         </form>
         <% comments.forEach(comment => { %>
@@ -50,12 +51,12 @@
                 <span class="hide" data-edit-comment-input-container>
                   <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>?_method=PUT" method="POST">
                     <input type="text" name="comment" value="<%= comment.comment %>">
-                    <button type="submit">Submit</button>
-                    <button type="button">Cancel</button>
+                    <button type="submit" class="submit-reply-btn">Submit</button>
+                    <button type="button" class="cancel-reply-btn">Cancel</button>
                   </form> 
                 </span>
               </div>
-              <form class="comments-like-reply-btn-container" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
+              <form class="comment-like-reply-btn-container" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
                 <% if (!user) { %>
                 <a class="a-like-btn" href="/account/login"><i style="font-size:0.8rem; margin-right: 5px" class="fa">&#xf087;</i><%= comment.usersLiked.length %></a>
                 <a class="a-reply-btn" data-comment-reply-button href="/account/login">Reply</a>
@@ -77,13 +78,13 @@
               <% } %>
             </div>
           </div>
-          <!-- reply input container -->
-          <div class="reply-comment-input-box hide" data-reply-comment-box-container>
+          <!-- REPLY INPUT CONTAINER -->
+          <div class="reply-comment-input-box hide" data-reply-input-box-container>
             <form class="reply-comment-form" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply" method="POST">
               <span>
                 <input type="text" name="replyComment" placeholder="Add a reply...">
-                <button type="submit">Reply</button>
-                <button type="button" data-reply-comment-cancel-button>Cancel</button>
+                <button type="submit" class="submit-reply-btn">Reply</button>
+                <button type="button" class="cancel-reply-btn" data-cancel-reply-button>Cancel</button>
               </span>
             </form>
           </div>

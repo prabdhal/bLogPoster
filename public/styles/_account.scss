@@ -1,15 +1,10 @@
-.account-form {
-  max-width: 500px;
+.basic-form {
+  max-width: var(--baseWidth);
   width: 100%;
   display: flex;
   flex-direction: column;
   text-align: center;
   margin: 0 auto;
-  padding: 30px 15px;
-
-  h2 {
-    margin-bottom: 20px;
-  }
 
   label {
     margin: 20px 0 10px 0;
@@ -19,6 +14,7 @@
     padding: var(--inputPadding);
     border: 0;
     outline: 0;
+    margin: 15px;
     background: linear-gradient(black, black) bottom / 0% 2px no-repeat;
     transition: var(--btnTransition);
   }
@@ -33,6 +29,7 @@
     padding: 10px;
     border-radius: var(--btnRadius);
     color: var(--successColor);
+    background-color: transparent;
     border: 2px solid var(--successColor);
     transition: var(--btnTransition);
     cursor: pointer;
@@ -50,4 +47,30 @@
     margin: 20px 0 10px 0;
     font-weight: 500;
   }
+}
+
+.verification-btn {
+  outline: 0;
+  border: 0;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.del-account-btn {
+  border: 0;
+  outline: 0;
+  width: 120px;
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 100px 0;
+  color: white;
+  background-color: var(--dangerColor);
+  border: 2px solid var(--dangerColor);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.del-account-btn:hover {
+  opacity: 0.8;
 }

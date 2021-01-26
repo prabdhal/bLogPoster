@@ -4,9 +4,11 @@ const VerifyAccount = require('../models/verifyCodeSchema');
 const { checkAuthenticated, checkNotAuthenticated } = require('../config/auth');
 const passport = require('passport');
 const transporter = require('../config/nodemailer');
+const axios = require('axios');
 
 const router = require('express').Router();
 
+// main account page
 router.get('/', checkAuthenticated, async (req, res) => {
   let errors = [];
   const user = req.user;
@@ -14,20 +16,19 @@ router.get('/', checkAuthenticated, async (req, res) => {
   res.render('account', { title: 'Account', errors, user });
 });
 
-router.get('/forgot-account', (req, res) => {
-  res.render('account-reset');
-});
-
+// login page
 router.get('/register', checkNotAuthenticated, async (req, res) => {
   let errors = [];
   res.render('register', { title: 'Register', errors, user: req.user });
 });
 
+// register page
 router.get('/login', checkNotAuthenticated, (req, res) => {
   let errors = [];
   res.render('login', { title: 'Login', errors, user: req.user });
 });
 
+// verifies user account
 router.get('/verify-account/:userId/:verifyCode', async (req, res) => {
   const user = await User.findOne({ _id: req.params.userId });
 
@@ -57,9 +58,44 @@ router.get('/verify-account/:userId/:verifyCode', async (req, res) => {
   await VerifyAccount.findOneAndDelete({ email: user.email });
 
   req.flash('success_msg', 'You have successfully verified your account');
+  req.logIn();
   res.redirect('/account');
 });
 
+// account recovery page where user enters email to reset account
+router.get('/account-recovery', (req, res) => {
+  res.render('accountRecovery', { title: 'Account Recovery', user: req.user });
+});
+
+// takes user to reset password page if user verification passes
+router.get('/account-recovery/:userId/:code', async (req, res) => {
+  const user = await User.findOne({ _id: req.params.userId });
+
+  // verification code does not exist
+  const verify = await VerifyAccount.findOne({ email: user.email });
+  if (!verify) {
+    req.flash('error_msg', 'Your activation link is invalid');
+    return res.redirect('/account/account-recovery');
+  }
+
+  // verification code does not match
+  if (verify.code !== req.params.code) {
+    req.flash('error_msg', 'Your verification code does not match');
+    return res.redirect('/account/account-recovery');
+  }
+
+  req.flash('success_msg', 'You have successfully verified your account');
+  res.redirect(`/account/reset-password/${user._id}/${verify.code}`);
+});
+
+// reset password page [Got to add auth]
+router.get('/reset-password/:id/:code', async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  res.render('resetPassword', { title: 'Reset Password', user });
+});
+
+// registration form submittion
 router.post('/register', checkNotAuthenticated, async (req, res) => {
   const { username, email, adminCode, password, confirmPassword } = req.body;
 
@@ -69,7 +105,8 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
   // validate user registration information
   if (!username || !email || !password || !confirmPassword)
     errors.push('Not all fields have been entered');
-  if (username.length <= 5) errors.push('Username already exists');
+  if (username.length <= 5)
+    errors.push('Username must contain at least 6 characters');
   if (password.length <= 7)
     errors.push('Password must contain at least 8 characters');
   if (password.search(/[a-z]/i) < 0)
@@ -124,6 +161,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
   res.redirect('/account/login');
 });
 
+// login form submittion
 router.post('/login', checkNotAuthenticated, async (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/account',
@@ -132,9 +170,9 @@ router.post('/login', checkNotAuthenticated, async (req, res, next) => {
   })(req, res, next);
 });
 
+// resend verification code for account validation
 router.post('/resend/verification-code/:id', async (req, res) => {
   const user = await User.findById(req.params.id);
-  console.log(user);
 
   // delete old verification codes
   await VerifyAccount.deleteMany({ email: user.email });
@@ -148,9 +186,39 @@ router.post('/resend/verification-code/:id', async (req, res) => {
   await verify.save();
   mailVerificationCode(user, verify, user.email);
 
+  req.flash(
+    'success_msg',
+    'A new verification code has been successfully sent to your email'
+  );
   res.redirect('/account');
 });
 
+// resend verification code for password reset
+router.post('/account-recovery', async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    req.flash('error_msg', 'An account with that email does not exist');
+    return res.redirect('/account/account-recovery');
+  }
+
+  // delete old verification codes
+  await VerifyAccount.deleteMany({ email: user.email });
+
+  const verify = new VerifyAccount({
+    email,
+    code: makeid(6),
+  });
+
+  await verify.save();
+
+  mailResetPassword(user, verify, email);
+
+  req.flash('success_msg', 'Verification code has been sent to your email');
+  res.redirect('/account/account-recovery');
+});
+
+// user logout
 router.get('/logout', checkAuthenticated, async (req, res) => {
   req.logout();
   req.flash('success_msg', 'You have successfully logged out');
@@ -176,12 +244,14 @@ function makeid(length) {
   return result;
 }
 
+// mail verfication code for account validation
 function mailVerificationCode(user, verify, email) {
   let link = `http://localhost:3000/account/verify-account/${user._id}/${verify.code}`;
 
   const mailOptions = {
     from: process.env.EMAIL,
-    to: `${email}`,
+    to: email,
+    cc: 'hello',
     subject: 'Email verification for blog website',
     text: `Click the following link to verify your email: ${link}`,
   };
@@ -195,14 +265,16 @@ function mailVerificationCode(user, verify, email) {
   });
 }
 
+// mail verfication code for password reset
 function mailResetPassword(user, verify, email) {
-  let link = `http://localhost:3000/account/reset-password/${user._id}/${verify.code}`;
+  let link = `http://localhost:3000/account/account-recovery/${user._id}/${verify.code}`;
 
   const mailOptions = {
     from: process.env.EMAIL,
     to: `${email}`,
     subject: 'Email verification for blog website',
-    text: `Click the following link to reset your password: ${link}`,
+    text: ``,
+    html: `<h3>Hello ${user.username}</h3><p>Your account username is ${user.username}.</p><p>To reset your password, click the following link: ${link}</p>`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -214,28 +286,47 @@ function mailResetPassword(user, verify, email) {
   });
 }
 
-router.get('/reset-password/:userId/:code', async (req, res) => {
-  const user = await User.findOne({ _id: req.params.userId });
+router.put('/reset-password/:id', async (req, res) => {
+  const { password, confirmPassword } = req.body;
+  let user = await User.findById(req.params.id);
 
-  // verification code does not exist
-  const verify = await VerifyAccount.findOne({ email: user.email });
-  if (!verify) {
-    req.flash('error_msg', 'Your activation link is invalid');
-    return res.redirect('/account/login');
+  let errors = [];
+
+  if (!password || !confirmPassword)
+    errors.push('Not all fields have been entered');
+  if (password.length <= 7)
+    errors.push('Password must contain at least 8 characters');
+  if (password.search(/[a-z]/i) < 0)
+    errors.push('Password must contain at least one letter');
+  if (password.search(/[0-9]/) < 0)
+    errors.push('Password must contain at least one digit');
+  if (password !== confirmPassword) errors.push('Passwords do not match');
+  if (password === user.username || password === user.email)
+    errors.push('Password can not match your username or email');
+
+  // return out if there are any errors with validation
+  if (errors.length > 0) {
+    return res.render('resetPassword', {
+      title: 'Reset Password',
+      errors,
+      user,
+    });
   }
 
-  // verification code does not match
-  if (verify.code !== req.params.verifyCode) {
-    req.flash('error_msg', 'Your verification code does not match');
-    return res.redirect('/account/login');
-  }
+  // hash passwords
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  // user account active
-  user.active = true;
-  await user.save();
-  await VerifyAccount.findOneAndDelete({ email: user.email });
+  user.password = hashedPassword;
 
-  req.flash('success_msg', 'You have successfully verified your account');
-  res.redirect('/account');
+  await user.save((err, result) => {
+    if (err) {
+      console.log(err);
+      res.render('resetPassword', { title: 'Reset Password', user });
+    } else {
+      console.log('article successfully saved!' + result);
+      res.redirect('/account/login');
+    }
+  });
 });
+
 module.exports = router;

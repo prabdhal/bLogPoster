@@ -10,19 +10,24 @@
     <h3 class="main-header">Account</h3>
     <main class="account-section">
       <h3>Welcome, <%= user.username %></h3>
+      <br>
       <%- include('./_messages.ejs') %>
       <% if (user.admin) { %>
         <label>User Role: Admin</label>
       <% } else { %>
         <label>User Role: User</label>
       <% } %>
+      <br>
+      <br>
+      <br>
+      
       <% if (!user.active) { %>
         <form action="/account/resend/verification-code/<%= user._id %>" method="POST">
           <button type="submit" class="verification-btn">Resend</button> verification code to <%= user.email %>
         </form>
       <% } %>
       <form action="/account/delete/<%= user._id %>?_method=DELETE" method="POST">
-        <button type="submit" class="del-btn">Delete Account</button>
+        <button type="submit" class="del-account-btn">Delete Account</button>
       </form>
     </main>
   </section>
