@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
-const commentSchema = mongoose.Schema({
+const replySchema = mongoose.Schema({
   blogRef: {
+    type: String,
+    required: true,
+  },
+  commentRef: {
     type: String,
     required: true,
   },
@@ -9,14 +13,11 @@ const commentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  comment: {
+  replyComment: {
     type: String,
     required: true,
   },
   usersLiked: {
-    type: Array,
-  },
-  replies: {
     type: Array,
   },
   createdAt: {
@@ -25,6 +26,6 @@ const commentSchema = mongoose.Schema({
   },
 });
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Reply = mongoose.model('Reply', replySchema);
 
-module.exports = Comment;
+module.exports = Reply;

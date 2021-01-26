@@ -6,11 +6,19 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: var(--primaryColor);
 }
 
 button {
   font-size: var(--smallFont);
   font-family: 'Roboto', sans-serif;
+}
+
+input::placeholder,
+input[type='text'],
+textarea {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
 }
 
 a {
@@ -19,16 +27,12 @@ a {
   text-align: center;
 }
 
-.article-container {
-  display: flex;
-  width: 100%;
-  max-width: 500px;
-}
-
 :root {
-  --primaryColor: blue;
-  --secondaryColor: rgb(55, 186, 230);
-  --complementaryColor: grey;
+  --primaryColor: #ebebeb;
+  --secondaryColor: #4062bb;
+  --complementaryColor: #59c3c3;
+  --complementaryColor2: #52489c;
+  --complementaryColor3: #f45b69;
   --dangerColor: red;
   --warningColor: lightcoral;
   --successColor: green;
@@ -37,6 +41,15 @@ a {
   --mediumFont: 1.5rem;
   --largeFont: 2rem;
   --hugeFont: 3rem;
+  --inputPadding: 8px;
+  --inputRadius: 20px;
+  --btnRadius: 25px;
+  --btnPadding: 5px 10px;
+  --btnWidth: 80px;
+  --btnShade: 0.5px 0.5px 2px black, -0.5px -0.5px 2px black;
+  --navHeight: 80px;
+  --baseWidth: 700px;
+  --btnTransition: all 500ms ease;
 }
 
 //############################################## GENERAL STYLING ##############################################//
@@ -45,166 +58,145 @@ a {
   margin: 0 auto;
 }
 
-.new-article-btn {
-  max-width: 100px;
-  max-height: 30px;
-  padding: 5px 10px;
-  border-radius: 2px;
-  text-align: center;
-  text-decoration: none;
-  text-align: center;
-  margin: 30px auto 10px auto;
-  color: white;
-  background-color: var(--primaryColor);
-  cursor: pointer;
+.sub-header {
+  font-size: var(--mediumFont);
+  margin: 0 auto;
 }
 
 // BUTTONS
 .back-btn {
-  width: 75px;
-  max-height: 25px;
-  padding: 5px 10px;
-  border-radius: 2px;
+  width: var(--btnWidth);
+  max-height: 29px;
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
   text-align: center;
   text-decoration: none;
-  color: white;
-  background-color: var(--warningColor);
+  color: var(--secondaryColor);
+  border: 2px solid var(--secondaryColor);
+  transition: var(--btnTransition);
   cursor: pointer;
 }
 
+.back-btn:hover {
+  background-color: var(--secondaryColor);
+  color: white;
+}
+
 .edit-btn {
-  width: 75px;
-  padding: 5px 10px;
-  border-radius: 2px;
+  border: 0;
+  outline: 0;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
   text-align: center;
   text-decoration: none;
   margin: 5px 0;
-  color: white;
-  background-color: var(--successColor);
+  color: var(--successColor);
+  border: 2px solid var(--successColor);
+  transition: var(--btnTransition);
   cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: var(--successColor);
+  color: white;
 }
 
 .publish-btn {
   border: 0;
   outline: 0;
-  width: 75px;
-  height: 25px;
-  padding: 0 10px;
-  border-radius: 2px;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 5px 0;
+  color: var(--secondaryColor);
+  border: 2px solid var(--secondaryColor);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
+.publish-btn:hover {
+  background-color: var(--secondaryColor);
+  color: white;
+}
+
+.unpublish-btn {
+  border: 0;
+  outline: 0;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
   margin: 5px 0;
   color: white;
+  border: 2px solid var(--secondaryColor);
   background-color: var(--secondaryColor);
+  transition: var(--btnTransition);
   cursor: pointer;
+}
+
+.unpublish-btn:hover {
+  opacity: 0.8;
 }
 
 .del-btn {
   border: 0;
   outline: 0;
-  width: 75px;
-  height: 25px;
-  padding: 0 10px;
-  border-radius: 2px;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
   margin: 5px 0;
   color: white;
   background-color: var(--dangerColor);
+  border: 2px solid var(--dangerColor);
+  transition: var(--btnTransition);
   cursor: pointer;
+}
+
+.del-btn:hover {
+  opacity: 0.8;
 }
 
 .submit-btn {
   border: 0;
   outline: 0;
-  width: 75px;
-  height: 25px;
-  padding: 0 10px;
-  border-radius: 2px;
-  margin: 5px 0;
-  color: white;
-  background-color: var(--successColor);
+  width: 100%;
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 10px 0;
+  color: var(--secondaryColor);
+  border: 2px solid var(--secondaryColor);
+  transition: var(--btnTransition);
   cursor: pointer;
+}
+
+.submit-btn:hover {
+  color: white;
+  background-color: var(--secondaryColor);
 }
 
 .cancel-btn {
-  width: 75px;
-  padding: 0 10px;
-  border-radius: 2px;
-  text-align: center;
+  border: 0;
+  outline: 0;
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin-bottom: 20px;
+  color: var(--complementaryColor3);
+  border: 2px solid var(--complementaryColor3);
+  width: var(--btnWidth);
+  text-decoration: none;
+  transition: var(--btnTransition);
   cursor: pointer;
 }
 
-.like-btn {
-  outline: 0;
-  border: 0;
-  width: 40px;
-  height: 21px;
-  background-color: #ccc;
-  padding: 2px 3px;
-  margin: 0 1px;
-  cursor: pointer;
-}
-.a-like-btn {
-  width: 40px;
-  height: 21px;
-  background-color: #ccc;
-  padding: 2px 3px;
-  margin: 0 1px;
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.reply-btn {
-  outline: 0;
-  border: 0;
-  width: 40px;
-  height: 21px;
-  background-color: #ccc;
-  padding: 2px 3px;
-  margin: 0 1px;
-  cursor: pointer;
-}
-.a-reply-btn {
-  width: 40px;
-  height: 21px;
-  background-color: #ccc;
-  padding: 2px 3px;
-  margin: 0 1px;
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+.cancel-btn:hover {
+  color: white;
+  background-color: var(--complementaryColor3);
 }
 
 .del-edit-btn-container {
   width: 80px;
   display: flex;
   flex-direction: column;
-}
-.comment-box-container {
-  max-width: 500px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 30px 0 20px 0;
-}
-
-.comment-info {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.comments-btn-containers {
-  width: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.comment-btn-container {
-  width: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .page-section {
@@ -213,13 +205,15 @@ a {
   display: flex;
   flex-direction: column;
   margin: auto;
-  padding: 2%;
+  padding: 5%;
 }
 
 @import 'Navbar';
 @import 'Home';
 @import 'Article';
 @import 'Account';
+@import 'Comments';
+@import 'Misc';
 
 // COLORS
 
@@ -245,4 +239,8 @@ a {
 
 .success-color-bg {
   background-color: var(--successColor);
+}
+
+.hide {
+  display: none;
 }

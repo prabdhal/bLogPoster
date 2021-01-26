@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/userSchema');
+const SecretCode = require('../models/secretCodeSchema');
 const { checkAuthenticated, checkNotAuthenticated } = require('../config/auth');
 const passport = require('passport');
+const transporter = require('../config/email');
 
 const router = require('express').Router();
 
@@ -67,12 +69,58 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
     password: hashedPassword,
     admin,
   });
+  const secretCode = new SecretCode({
+    email,
+    code: makeid(5),
+  });
+
+  let baseUrl = 'http://localhost:3000';
+  let mailOptions = {
+    from: 'automailer.email@gmail.com',
+    to: `${email}`,
+    subject: 'Email verification for blog website',
+    text: `Click the following link to verify your email: ${baseUrl}/api/auth/verification/verify-account/${user._id}/${secretCode.code}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 
   const savedUser = await user.save();
-  res.redirect('/account/login');
+  const savedCode = await secretCode.save();
+  res.render('verify', { title: 'verification', user, secretCode });
 });
 
-router.post('/login', checkNotAuthenticated, (req, res, next) => {
+router.get('/verify', checkAuthenticated, async (req, res) => {
+  let baseUrl = 'http://localhost:3000';
+  let mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: email,
+    subject: 'Email verification for blog website',
+    text: `Click the following link to verify your email: ${baseUrl}/api/auth/verification/verify-account/${user._id}/${secretCode.code}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+});
+
+router.post('/login', checkNotAuthenticated, async (req, res, next) => {
+  const { username } = req.body;
+  const user = await User.findOne({ username });
+  if (user.status == 'pending') {
+    res.render('verify', { title: 'verification', user, secretCode });
+    return;
+  }
+
   passport.authenticate('local', {
     successRedirect: '/account',
     failureRedirect: '/account/login',
@@ -85,5 +133,22 @@ router.get('/logout', checkAuthenticated, async (req, res) => {
   req.flash('success_msg', 'You have successfully logged out');
   res.redirect('/account/login');
 });
+
+// delete account
+router.delete('/delete/:id', async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
+});
+
+// make random id
+function makeid(length) {
+  var result = '';
+  var characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 module.exports = router;

@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Article = require('../models/articleSchema');
 const Comment = require('../models/commentSchema');
+const Reply = require('../models/replySchema');
+const { checkAuthenticated } = require('../config/auth');
 
 // get blogs home page
 router.get('/', async (req, res) => {
@@ -13,27 +15,34 @@ router.get('/', async (req, res) => {
 router.get('/view/:slug', async (req, res) => {
   const article = await Article.findOne({ slug: req.params.slug });
   const allComments = await Comment.find();
+  const allReplies = await Reply.find();
 
   let comments = [];
+  let replies = [];
 
   for (i = 0; i < allComments.length; i++) {
     if (allComments[i].blogRef == article._id) {
       comments.push(allComments[i]);
-      console.log(`comments for this blog post are ${comments}`);
     }
   }
-  console.log(comments);
+  for (i = 0; i < allReplies.length; i++) {
+    console.log(allReplies[i].blogRef + ' vs ' + article._id);
+    if (allReplies[i].blogRef == article._id) {
+      replies.push(allReplies[i]);
+    }
+  }
 
   res.render('view', {
     title: 'View Article',
     article,
     user: req.user,
     comments,
+    replies,
   });
 });
 
 // get new article page
-router.get('/new', async (req, res) => {
+router.get('/new', checkAuthenticated, async (req, res) => {
   res.render('new', {
     title: 'New Article',
     article: new Article(),
@@ -42,14 +51,14 @@ router.get('/new', async (req, res) => {
 });
 
 // get edit article page
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', checkAuthenticated, async (req, res) => {
   const article = await Article.findById(req.params.id);
 
   res.render('edit', { title: 'Edit Article', article, user: req.user });
 });
 
 // create new article
-router.post('/new', async (req, res) => {
+router.post('/new', checkAuthenticated, async (req, res) => {
   const { title, author, description, markdown } = req.body;
   const user = req.user;
 
@@ -77,19 +86,15 @@ router.post('/new', async (req, res) => {
 });
 
 // post a comment
-router.post('/view/:slug/comment', async (req, res) => {
-  const { comment } = req.body;
-
+router.post('/view/:slug/comment', checkAuthenticated, async (req, res) => {
   const article = await Article.findOne({ slug: req.params.slug });
+  const { comment } = req.body;
 
   const comments = new Comment({
     blogRef: article._id,
     author: req.user.username,
     comment,
   });
-
-  console.log(comments);
-  console.log(article);
 
   const saveComment = await comments.save((err, result) => {
     if (err) {
@@ -102,8 +107,36 @@ router.post('/view/:slug/comment', async (req, res) => {
   });
 });
 
+// post a reply
+router.post(
+  '/view/:slug/comment/:id/reply',
+  checkAuthenticated,
+  async (req, res) => {
+    const article = await Article.findOne({ slug: req.params.slug });
+    const comment = await Comment.findById(req.params.id);
+    const { replyComment } = req.body;
+
+    const replies = new Reply({
+      blogRef: article._id,
+      commentRef: comment._id,
+      author: req.user.username,
+      replyComment,
+    });
+
+    const saveReply = await replies.save((err, result) => {
+      if (err) {
+        console.log('An error occurred during save ' + err);
+        res.redirect(`/blogs/view/${article.slug}`);
+      } else {
+        console.log('reply successfully saved!' + result);
+        res.redirect(`/blogs/view/${article.slug}`);
+      }
+    });
+  }
+);
+
 // edit article
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', checkAuthenticated, async (req, res) => {
   const { title, author, description, markdown } = req.body;
 
   const article = await Article.findById(req.params.id);
@@ -125,7 +158,7 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // publish article
-router.put('/publish/:id', async (req, res) => {
+router.put('/publish/:id', checkAuthenticated, async (req, res) => {
   const article = await Article.findById(req.params.id);
 
   console.log('article is currently: ' + article.published);
@@ -144,71 +177,155 @@ router.put('/publish/:id', async (req, res) => {
 });
 
 // edit comment
-router.put('/comment/:id', async (req, res) => {
-  const article = await Article.findById(req.params.id);
+router.put('/view/:slug/comment/:id', checkAuthenticated, async (req, res) => {
+  const article = await Article.findOne({ slug: req.params.slug });
+  const userComment = await Comment.findById(req.params.id);
+  const { comment } = req.body;
 
-  article.comments.push(comment);
+  userComment.comment = comment;
 
-  const saveComment = await article.save((err, result) => {
+  const saveComment = await userComment.save((err, result) => {
     if (err) {
       console.log(err);
-      res.redirect('/blogs');
+      res.redirect(`/blogs/view/${article.slug}`);
     } else {
-      console.log('article successfully saved!' + result);
-      res.redirect('/blogs');
-    }
-  });
-});
-
-// like comment
-router.put('/view/:slug/comment/:id/like', async (req, res) => {
-  const article = await Article.findOne({ slug: req.params.slug });
-  const comment = await Comment.findById(req.params.id);
-  const user = req.user;
-
-  console.log('the user is ' + user);
-  let authorLikedAlready = false;
-  let removeIndex = null;
-
-  for (i = 0; i < comment.usersLiked.length; i++) {
-    if (user.username == comment.usersLiked[i]) {
-      authorLikedAlready = true;
-      removeIndex = i;
-      console.log(
-        `The user reliking has been identified at index ${removeIndex}`
-      );
-    }
-  }
-
-  console.log(`authorLikedAlready: ${authorLikedAlready}`);
-  if (authorLikedAlready) comment.usersLiked.splice(removeIndex, 1);
-  else comment.usersLiked.push(user.username);
-
-  const saveComment = await comment.save((err, result) => {
-    if (err) {
-      console.log('An error occurred during save ' + err);
-      res.redirect('/blogs');
-    } else {
-      console.log('article successfully saved!' + result);
+      console.log('comment successfully saved!' + result);
       res.redirect(`/blogs/view/${article.slug}`);
     }
   });
 });
 
+// edit reply
+router.put(
+  '/view/:slug/comment/:id/reply/:id',
+  checkAuthenticated,
+  async (req, res) => {
+    const article = await Article.findOne({ slug: req.params.slug });
+    const userComment = await Comment.findById(req.params.id);
+    const reply = await Reply.findById(req.params.id);
+    const { replyComment } = req.body;
+
+    reply.replyComment = replyComment;
+
+    const saveComment = await reply.save((err, result) => {
+      if (err) {
+        console.log(err);
+        res.redirect(`/blogs/view/${article.slug}`);
+      } else {
+        console.log('comment successfully saved!' + result);
+        res.redirect(`/blogs/view/${article.slug}`);
+      }
+    });
+  }
+);
+
+// like comment
+router.put(
+  '/view/:slug/comment/:id/like',
+  checkAuthenticated,
+  async (req, res) => {
+    const article = await Article.findOne({ slug: req.params.slug });
+    const comment = await Comment.findById(req.params.id);
+    const user = req.user;
+
+    let authorLikedAlready = false;
+    let removeIndex = null;
+
+    for (i = 0; i < comment.usersLiked.length; i++) {
+      if (user.username == comment.usersLiked[i]) {
+        authorLikedAlready = true;
+        removeIndex = i;
+      }
+    }
+
+    if (authorLikedAlready) comment.usersLiked.splice(removeIndex, 1);
+    else comment.usersLiked.push(user.username);
+
+    const saveComment = await comment.save((err, result) => {
+      if (err) {
+        console.log('An error occurred during save ' + err);
+        res.redirect('/blogs');
+      } else {
+        console.log('article successfully saved!' + result);
+        res.redirect(`/blogs/view/${article.slug}`);
+      }
+    });
+  }
+);
+
+// like reply
+router.put(
+  '/view/:slug/comment/:id/reply/:id/like',
+  checkAuthenticated,
+  async (req, res) => {
+    const article = await Article.findOne({ slug: req.params.slug });
+    const reply = await Reply.findById(req.params.id);
+    const user = req.user;
+
+    let authorLikedAlready = false;
+    let removeIndex = null;
+
+    for (i = 0; i < reply.usersLiked.length; i++) {
+      if (user.username == reply.usersLiked[i]) {
+        authorLikedAlready = true;
+        removeIndex = i;
+      }
+    }
+
+    if (authorLikedAlready) reply.usersLiked.splice(removeIndex, 1);
+    else reply.usersLiked.push(user.username);
+
+    const saveReply = await reply.save((err, result) => {
+      if (err) {
+        console.log('An error occurred during save ' + err);
+        res.redirect(`/blogs/view/${article.slug}`);
+      } else {
+        console.log('reply successfully saved!' + result);
+        res.redirect(`/blogs/view/${article.slug}`);
+      }
+    });
+  }
+);
+
 // delete article
-router.delete('/:id', async (req, res) => {
-  await Article.findByIdAndDelete(req.params.id);
+router.delete('/:id', checkAuthenticated, async (req, res) => {
+  const article = await Article.findById(req.params.id);
+  const comments = await Comment.find({ blogRef: article._id });
+
+  for (i = 0; i < comments.length; i++) {
+    await Reply.deleteMany({ commentRef: comments[i]._id });
+  }
+  await Comment.deleteMany({ blogRef: article._id });
+  await Article.deleteOne(article);
 
   res.redirect('/blogs');
 });
 
 // delete comment
-router.delete('/view/:slug/comment/:id', async (req, res) => {
-  const article = await Article.findOne({ slug: req.params.slug });
-  console.log(req.params.slug);
-  await Comment.findByIdAndDelete(req.params.id);
+router.delete(
+  '/view/:slug/comment/:id',
+  checkAuthenticated,
+  async (req, res) => {
+    const article = await Article.findOne({ slug: req.params.slug });
+    const comment = await Comment.findById(req.params.id);
 
-  res.redirect(`/blogs/view/${article.slug}`);
-});
+    await Reply.deleteMany({ commentRef: comment._id });
+    await Comment.deleteOne(comment);
+
+    res.redirect(`/blogs/view/${article.slug}`);
+  }
+);
+
+// delete reply
+router.delete(
+  '/view/:slug/comment/:id/reply/:id',
+  checkAuthenticated,
+  async (req, res) => {
+    const article = await Article.findOne({ slug: req.params.slug });
+    await Reply.findByIdAndDelete(req.params.id);
+
+    res.redirect(`/blogs/view/${article.slug}`);
+  }
+);
 
 module.exports = router;

@@ -16,12 +16,31 @@
   }
 
   input {
-    padding: 8px;
+    padding: var(--inputPadding);
+    border: 0;
+    outline: 0;
+    background: linear-gradient(black, black) bottom / 0% 2px no-repeat;
+    transition: var(--btnTransition);
+  }
+
+  input:hover,
+  input:focus {
+    background-size: 100% 2px;
   }
 
   button {
     margin-top: 20px;
     padding: 10px;
+    border-radius: var(--btnRadius);
+    color: var(--successColor);
+    border: 2px solid var(--successColor);
+    transition: var(--btnTransition);
+    cursor: pointer;
+  }
+
+  button:hover {
+    color: white;
+    background-color: var(--successColor);
   }
 }
 

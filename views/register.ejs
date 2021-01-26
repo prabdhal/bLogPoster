@@ -6,20 +6,23 @@
 </head>
 <body>  
   <%- include('./_navbar.ejs')%>
-  <form class="account-form" action="/account/register" method="POST">
-    <h2>Register</h2>
-    <%- include('./_messages.ejs')%>
-    <label>Username</label>
-    <input type="text" name="username" placeholder="username">
-    <label>Email</label>
-    <input type="email" name="email" placeholder="email">
-    <label>Admin Code</label>
-    <input type="password" name="adminCode" placeholder="admin code">
-    <label>Password</label>
-    <input type="password" name="password" placeholder="password">
-    <label>Confirm Password</label>
-    <input type="password" name="confirmPassword" placeholder="confirm password">
-    <button type="submit">Submit</button>
-  </form>
+  
+  <main class="page-section">
+    <form class="account-form" action="/account/register" method="POST">
+      <h2>Register</h2>
+      <%- include('./_messages.ejs')%>
+      <label>Username</label>
+      <input type="text" name="username" placeholder="username">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="email">
+      <label>Admin Code</label>
+      <input type="password" name="adminCode" placeholder="admin code">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="password">
+      <label>Confirm Password</label>
+      <input type="password" name="confirmPassword" placeholder="confirm password">
+      <button type="submit">Submit</button>
+    </form>
+  </main>
 </body>
 </html>

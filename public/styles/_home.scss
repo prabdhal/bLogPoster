@@ -1,5 +1,6 @@
 .article-container {
-  max-width: 500px;
+  max-width: var(--baseWidth);
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -10,7 +11,7 @@
     .article-title a {
       font-size: var(--mediumFont);
       text-decoration: none;
-      color: rgb(104, 201, 233);
+      color: #369ad8;
     }
     .article-author {
       display: flex;
@@ -41,4 +42,24 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+.new-article-btn {
+  max-width: 100px;
+  max-height: 30px;
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  text-align: center;
+  text-decoration: none;
+  text-align: center;
+  margin: 30px auto 10px auto;
+  color: var(--secondaryColor);
+  border: 2px solid var(--secondaryColor);
+  cursor: pointer;
+  transition: var(--btnTransition);
+}
+
+.new-article-btn:hover {
+  color: white;
+  background-color: var(--secondaryColor);
 }

@@ -15,6 +15,9 @@
       <% } else { %>
         <label>User Role: User</label>
       <% } %>
+      <form action="/account/delete/<%= user._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="del-btn">Delete Account</button>
+      </form>
     </main>
   </section>
 </body>

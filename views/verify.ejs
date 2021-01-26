@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./_head.ejs') %>
+  <title>Blogs - <%= title %></title>
+</head>
+<body>
+  <%- include('./_navbar.ejs')%>
+  <section class="page-section">
+    <h3 class="main-header">Verification</h3>
+    <main class="account-section">
+      <h3>You have to verify your account before you can login. Click the link in your email address in order to verify your account</h3>
+      <a href="/verify">Resend Code</a>
+    </main>
+  </section>
+</body>
+</html>

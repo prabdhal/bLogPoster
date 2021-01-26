@@ -1,16 +1,14 @@
 <nav>
-  <ul class="nav-links">
-    <li><a href="/" class="nav-link">Home</a></li>
+  <div><a href="/" class="home-link">Home</a></div>
   <% if (!user) { %>
-    <div class="account-links">
-      <li><a href="/account/login" class="nav-link">Login</a></li>
-      <li><a href="/account/register" class="nav-link">Register</a></li>
-    </div>
+  <div class="account-links">
+    <a href="/account/login" class="account-link">Login</a>
+    <a href="/account/register" class="account-link">Register</a>
+  </div>
   <% } else { %>
-    <div class="account-links">
-      <li><a href="/account" class="nav-link">Account</a></li>
-      <li><a href="/account/logout" class="nav-link">Logout</a></li>
-    </div>
+  <div class="account-links">
+    <a href="/account" class="account-link">Account</a>
+    <a href="/account/logout" class="account-link">Logout</a>
+  </div>
   <% } %>
-  </ul>
 </nav>
