@@ -82,7 +82,7 @@ router.post('/new', checkValidated, checkAuthenticated, async (req, res) => {
         user,
       });
     } else {
-      res.redirect(`/blogs/view/${article.slug}`);
+      res.redirect(`/bLogger/view/${article.slug}`);
     }
   });
 });
@@ -104,9 +104,9 @@ router.post(
 
     const saveComment = await comments.save((err, result) => {
       if (err) {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -131,9 +131,9 @@ router.post(
 
     const saveReply = await replies.save((err, result) => {
       if (err) {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -158,7 +158,7 @@ router.put(
       if (err) {
         res.render('new', { title: 'New Article', article, user: req.user });
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -176,9 +176,9 @@ router.put(
 
     const saveArticle = await article.save((err, result) => {
       if (err) {
-        res.redirect('/blogs');
+        res.redirect('/bLogger');
       } else {
-        res.redirect('/blogs');
+        res.redirect('/bLogger');
       }
     });
   }
@@ -198,9 +198,9 @@ router.put(
 
     const saveComment = await userComment.save((err, result) => {
       if (err) {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -221,9 +221,9 @@ router.put(
 
     const saveComment = await reply.save((err, result) => {
       if (err) {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -254,9 +254,9 @@ router.put(
 
     const saveComment = await comment.save((err, result) => {
       if (err) {
-        res.redirect('/blogs');
+        res.redirect('/bLogger');
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -287,9 +287,9 @@ router.put(
 
     const saveReply = await reply.save((err, result) => {
       if (err) {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       } else {
-        res.redirect(`/blogs/view/${article.slug}`);
+        res.redirect(`/bLogger/view/${article.slug}`);
       }
     });
   }
@@ -306,7 +306,7 @@ router.delete('/:id', checkAuthenticated, checkValidated, async (req, res) => {
   await Comment.deleteMany({ blogRef: article._id });
   await Article.deleteOne(article);
 
-  res.redirect('/blogs');
+  res.redirect('/bLogger');
 });
 
 // delete comment
@@ -321,7 +321,7 @@ router.delete(
     await Reply.deleteMany({ commentRef: comment._id });
     await Comment.deleteOne(comment);
 
-    res.redirect(`/blogs/view/${article.slug}`);
+    res.redirect(`/bLogger/view/${article.slug}`);
   }
 );
 
@@ -334,7 +334,7 @@ router.delete(
     const article = await Article.findOne({ slug: req.params.slug });
     await Reply.findByIdAndDelete(req.params.id);
 
-    res.redirect(`/blogs/view/${article.slug}`);
+    res.redirect(`/bLogger/view/${article.slug}`);
   }
 );
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('./_head.ejs') %>
-  <title>Blogs - <%= article.title %></title>
+  <title>bLogger - <%= article.title %></title>
 </head>
 <body>
   <%- include('./_navbar.ejs')%>
@@ -15,7 +15,7 @@
       </div>
       <section class="message-content">
         <p>Are you sure you want to permenantly delete this article?</p>
-        <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
+        <form action="/bLogger/<%= article._id %>?_method=DELETE" method="POST">
           <button type="submit" class="del-btn">Delete</button>
           <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
         </form>
@@ -25,11 +25,11 @@
     <section class="article-section">
       <!-- VIEW ARTICLE PAGE BUTTONS -->
       <div class="view-article-btns">
-        <a class="back-btn" href="/blogs">Back</a>
+        <a class="back-btn" href="/bLogger">Back</a>
         <% if (user) { %>
         <% if (user.username == article.createdUsername) { %>
         <div class="del-edit-btn-container">
-          <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
+          <a class="edit-btn" href="/bLogger/edit/<%= article._id %>">Edit</a>
           <button class="del-btn" type="button" onclick="deleteArticleFunction('<%= article._id %>')" data-delete-article-button>Delete</button>
         </div>
         <% } %>
@@ -46,7 +46,7 @@
       <section class="comments-section">
         <h2 class="sub-header">Comments</h2>
         <!-- COMMENT INPUT CONTAINER -->
-        <form class="basic-form" action="/blogs/view/<%= article.slug %>/comment" method="POST">
+        <form class="basic-form" action="/bLogger/view/<%= article.slug %>/comment" method="POST">
           <%- include('./_comment_form.ejs') %>
         </form>
         <% comments.forEach(comment => { %>
@@ -57,7 +57,7 @@
             </div>
             <section class="message-content">
               <p>Are you sure you want to permenantly delete this comment?</p>
-              <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
+              <form action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
                 <button type="submit" class="del-btn">Delete</button>
                 <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
               </form>
@@ -74,13 +74,13 @@
               <!-- comment and edit input container -->
               <div class="comment-and-edit-input-container">
                 <div class="comment"><%= comment.comment %></div>
-                <form class="hide" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>?_method=PUT" method="POST" data-edit-comment-input-container>
+                <form class="hide" action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>?_method=PUT" method="POST" data-edit-comment-input-container>
                   <input type="text" name="comment" value="<%= comment.comment %>">
                   <button type="submit" class="submit-reply-btn">Submit</button>
                   <button type="button" class="cancel-reply-btn" data-cancel-edit-comment-button>Cancel</button>
                 </form> 
               </div>
-              <form class="comment-like-reply-btn-container" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
+              <form class="comment-like-reply-btn-container" action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
                 <% if (!user) { %>
                 <a class="a-like-btn" href="/account/login"><i style="font-size:0.8rem; margin-right: 5px" class="fa">&#xf087;</i><%= comment.usersLiked.length %></a>
                 <a class="a-reply-btn" data-comment-reply-button href="/account/login">Reply</a>
@@ -105,7 +105,7 @@
           </div>
           <!-- REPLY INPUT CONTAINER -->
           <div class="reply-comment-input-box hide" data-reply-input-container>
-            <form class="reply-comment-form" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply" method="POST">
+            <form class="reply-comment-form" action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>/reply" method="POST">
               <span>
                 <input type="text" name="replyComment" placeholder="Add a reply...">
                 <button type="submit" class="submit-reply-btn">Reply</button>
@@ -121,7 +121,7 @@
             </div>
             <section class="message-content">
               <p>Are you sure you want to permenantly delete this reply?</p>
-              <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>?_method=DELETE" method="POST">
+              <form action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>?_method=DELETE" method="POST">
                 <button type="submit" class="del-btn">Delete</button>
                 <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
               </form>
@@ -139,13 +139,13 @@
               <!-- reply and edit input container -->
               <div class="comment-and-edit-input-container">
                 <div class="comment"><%= reply.replyComment %></div>
-                <form class="hide" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>?_method=PUT" method="POST" data-edit-comment-input-container>
+                <form class="hide" action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>?_method=PUT" method="POST" data-edit-comment-input-container>
                   <input type="text" name="replyComment" value="<%= reply.replyComment %>">
                   <button type="submit" class="submit-reply-btn">Submit</button>
                   <button type="button" class="cancel-reply-btn" data-cancel-edit-comment-button>Cancel</button>
                 </form> 
               </div>
-              <form class="comments-like-reply-btn-container" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>/like?_method=PUT" method="POST">
+              <form class="comments-like-reply-btn-container" action="/bLogger/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>/like?_method=PUT" method="POST">
                 <% if (!user) { %>
                 <a class="a-like-btn" href="/account/login"><i style="font-size:0.8rem; margin-right: 5px" class="fa">&#xf087;</i><%= comment.usersLiked.length %></a>
                 <% } else { %>

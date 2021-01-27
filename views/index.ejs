@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('./_head.ejs') %>
-  <title>Blogs - <%= title %></title>
+  <title>bLogger - <%= title %></title>
 </head>
 <body>
   <%- include('./_navbar.ejs')%>
@@ -10,7 +10,7 @@
   <main class="page-section">
     <h3 class="main-header">Blogs</h3>
     <% if (user) { %>
-    <a class="new-article-btn" href="/blogs/new">New Article</a>
+    <a class="new-article-btn" href="/bLogger/new">New Blog</a>
     <% } %>
     <!-- Article Section -->
     <% if (articles.length <= 0) { %>
@@ -24,7 +24,7 @@
       </div>
       <section class="message-content">
         <p>Are you sure you want to permenantly delete this article?</p>
-        <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
+        <form action="/bLogger/<%= article._id %>?_method=DELETE" method="POST">
           <button type="submit" class="del-btn">Delete</button>
           <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
         </form>
@@ -36,15 +36,15 @@
       <!-- Published Articles Shown To Public (Users) -->
       <div class="article-container">
         <div class="article-information">
-          <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+          <h4 class="article-title"><a href="/bLogger/view/<%= article.slug %>"><%= article.title %></a></h4>
           <div class="article-author"><div><%= article.createdUsername %></div></div>
           <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
           <div class="article-description"><%= article.description %></div>
         </div>
         <% if (user.username == article.createdUsername) { %>
         <div class="del-edit-btn-container">
-          <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
-          <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
+          <a class="edit-btn" href="/bLogger/edit/<%= article._id %>">Edit</a>
+          <form action="/bLogger/publish/<%= article._id %>?_method=PUT" method="POST">
             <% if (article.published) { %>
             <button class="unpublish-btn" type="submit">Unpublish</button>
             <% } else { %>
@@ -59,7 +59,7 @@
     <!-- All Articles (Published/Unpublished) Shown To Admin -->
     <div class="article-container">
       <div class="article-information">
-        <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+        <h4 class="article-title"><a href="/bLogger/view/<%= article.slug %>"><%= article.title %></a></h4>
         <div class="article-author"><div><%= article.createdUsername %></div></div>
         <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
         <div class="article-description"><%= article.description %></div>
@@ -67,8 +67,8 @@
       <% if (user.username == article.createdUsername) { %>
         <!-- Edit, Publish or Delete Article Buttons Shown To Admin For Their Articles Only -->
       <div class="del-edit-btn-container">
-        <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
-        <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
+        <a class="edit-btn" href="/bLogger/edit/<%= article._id %>">Edit</a>
+        <form action="/bLogger/publish/<%= article._id %>?_method=PUT" method="POST">
           <% if (article.published) { %>
           <button class="unpublish-btn" type="submit">Unpublish</button>
           <% } else { %>
@@ -84,7 +84,7 @@
     <!-- Published Articles Shown To Public (Non-Users) -->
     <div class="article-container">
       <div class="article-information">
-        <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+        <h4 class="article-title"><a href="/bLogger/view/<%= article.slug %>"><%= article.title %></a></h4>
         <div class="article-author"><div><%= article.createdUsername %></div></div>
         <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
         <div class="article-description"><%= article.description %></div>

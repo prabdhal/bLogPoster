@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get('/', (req, res) => {
-  res.redirect('/blogs');
+  res.redirect('/bLogger');
 });
-app.use('/blogs', blogRoutes);
+app.use('/bLogger', blogRoutes);
 app.use('/account', userRoutes);

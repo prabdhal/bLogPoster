@@ -4,7 +4,6 @@ const VerifyAccount = require('../models/verifyCodeSchema');
 const { checkAuthenticated, checkNotAuthenticated } = require('../config/auth');
 const passport = require('passport');
 const transporter = require('../config/nodemailer');
-const axios = require('axios');
 
 const router = require('express').Router();
 
