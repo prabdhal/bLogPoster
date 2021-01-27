@@ -692,18 +692,11 @@ nav div a:hover {
   padding-bottom: 10px;
 }
 
-.comment-and-edit-input-container span form {
+.comment-and-edit-input-container form {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
 }
 
-.comment-and-edit-input-container span form input {
+.comment-and-edit-input-container form input {
   width: 100%;
   padding: var(--inputPadding);
   border: 0;
@@ -714,8 +707,8 @@ nav div a:hover {
   transition: var(--btnTransition);
 }
 
-.comment-and-edit-input-container span form input:hover,
-.comment-and-edit-input-container span form input:focus {
+.comment-and-edit-input-container form input:hover,
+.comment-and-edit-input-container form input:focus {
   background-size: 100% 2px;
 }
 

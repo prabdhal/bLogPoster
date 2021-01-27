@@ -5,23 +5,21 @@ const dataCommentLikeButtons = document.querySelectorAll(
 const dataCommentReplyButtons = document.querySelectorAll(
   '[data-comment-reply-button]'
 );
-const dataCancelReplyButtons = document.querySelectorAll(
-  '[data-cancel-reply-button]'
-);
-const dataReplyInputBoxContainers = document.querySelectorAll(
-  '[data-reply-input-box-container]'
-);
 const dataEditCommentButtons = document.querySelectorAll(
   '[data-edit-comment-button]'
 );
 const dataEditCommentInputContainers = document.querySelectorAll(
   '[data-edit-comment-input-container]'
 );
-const dataCommentInputContainers = document.querySelectorAll(
-  '[data-comment-input-container]'
+const dataCloseEditInputBoxButtons = document.querySelectorAll(
+  '[data-close-edit-input-box-button]'
 );
-const dataCommentButtonContainers = document.querySelectorAll(
-  '[data-comments-btn-containers]'
+
+const dataReplyInputBoxContainers = document.querySelectorAll(
+  '[data-reply-input-box-container]'
+);
+const dataCancelReplyButtons = document.querySelectorAll(
+  '[data-cancel-reply-button]'
 );
 
 // close error messages
@@ -35,6 +33,7 @@ closeErrorButtons.forEach((button) => {
 
 dataEditCommentButtons.forEach((editButton) => {
   editButton.addEventListener('click', () => {
+    this.closeAllReplyContainers();
     this.closeAllEditContainers();
     // hide comment
     editButton.parentElement.parentElement.previousElementSibling.firstElementChild.nextElementSibling.firstElementChild.classList.add(
@@ -48,10 +47,18 @@ dataEditCommentButtons.forEach((editButton) => {
   });
 });
 
+dataCloseEditInputBoxButtons.forEach((cancelButton) => {
+  cancelButton.addEventListener('click', () => {
+    this.closeAllReplyContainers();
+    this.closeAllEditContainers();
+  });
+});
+
 // open corresponding reply box
 dataCommentReplyButtons.forEach((replyButton) => {
   replyButton.addEventListener('click', () => {
     this.closeAllReplyContainers();
+    this.closeAllEditContainers();
     replyButton.parentElement.parentElement.parentElement.nextElementSibling.classList.remove(
       'hide'
     );
@@ -62,6 +69,7 @@ dataCommentReplyButtons.forEach((replyButton) => {
 dataCancelReplyButtons.forEach((cancelButton) => {
   cancelButton.addEventListener('click', () => {
     this.closeAllReplyContainers();
+    this.closeAllEditContainers();
   });
 });
 

@@ -48,13 +48,11 @@
               <!-- comment and edit input container -->
               <div class="comment-and-edit-input-container">
                 <div class="comment"><%= comment.comment %></div>
-                <span class="hide" data-edit-comment-input-container>
-                  <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>?_method=PUT" method="POST">
-                    <input type="text" name="comment" value="<%= comment.comment %>">
-                    <button type="submit" class="submit-reply-btn">Submit</button>
-                    <button type="button" class="cancel-reply-btn">Cancel</button>
-                  </form> 
-                </span>
+                <form class="hide" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>?_method=PUT" method="POST" data-edit-comment-input-container>
+                  <input type="text" name="comment" value="<%= comment.comment %>">
+                  <button type="submit" class="submit-reply-btn">Submit</button>
+                  <button type="button" class="cancel-reply-btn" data-close-edit-input-box-button>Cancel</button>
+                </form> 
               </div>
               <form class="comment-like-reply-btn-container" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/like?_method=PUT" method="POST">
                 <% if (!user) { %>
@@ -100,13 +98,11 @@
               <!-- reply and edit input container -->
               <div class="comment-and-edit-input-container">
                 <div class="comment"><%= reply.replyComment %></div>
-                <span class="hide" data-edit-comment-input-container>
-                  <form action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>?_method=PUT" method="POST">
-                    <input type="text" name="replyComment" value="<%= reply.replyComment %>">
-                    <button type="submit">Submit</button>
-                    <button type="button">Cancel</button>
-                  </form> 
-                </span>
+                <form class="hide" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>?_method=PUT" method="POST" data-edit-comment-input-container>
+                  <input type="text" name="replyComment" value="<%= reply.replyComment %>">
+                  <button type="submit" class="submit-reply-btn">Submit</button>
+                  <button type="button" class="cancel-reply-btn" data-close-edit-input-box-button>Cancel</button>
+                </form> 
               </div>
               <form class="comments-like-reply-btn-container" action="/blogs/view/<%= article.slug %>/comment/<%= comment._id %>/reply/<%= reply._id %>/like?_method=PUT" method="POST">
                 <% if (!user) { %>
