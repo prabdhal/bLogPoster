@@ -32,7 +32,6 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
 router.get('/verify-account/:userId/:verifyCode', async (req, res) => {
   const user = await User.findOne({ _id: req.params.userId });
 
-  console.log(user);
   // verification code does not exist
   const verify = await VerifyAccount.findOne({ email: user.email });
   if (!verify) {
@@ -252,10 +251,8 @@ router.put('/reset-password/:id', async (req, res) => {
 
   await user.save((err, result) => {
     if (err) {
-      console.log(err);
       res.render('resetPassword', { title: 'Reset Password', user });
     } else {
-      console.log('article successfully saved!' + result);
       res.redirect('/account/login');
     }
   });
@@ -296,14 +293,13 @@ function mailVerificationCode(user, verify, email) {
     to: email,
     cc: 'hello',
     subject: 'Email verification for blog website',
-    text: `Click the following link to verify your email: ${link}`,
+    text: ``,
+    html: `<h4>Dear ${user.username},</h4><br/><p>To validate your bLogger account, click the link below:</p> <p>${link}</p><br/><p>Your account information:</p> <p>Username: ${user.username}</p><br/><p>Should you have any questions or concerns, please contact me at prab.dhaliwal95@gmail.com or leave a comment on my tutorial blog on bLogger and I will get back to you.</p><br/><p>Sincerely,</p><p>Prabdeep Dhaliwal</p><p>https://www.bLogger.com</p>`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
     }
   });
 }
@@ -317,7 +313,7 @@ function mailResetPassword(user, verify, email) {
     to: `${email}`,
     subject: 'Email verification for blog website',
     text: ``,
-    html: `<h3>Hello ${user.username}</h3><p>Your account username is ${user.username}.</p><p>To reset your password, click the following link: ${link}</p>`,
+    html: `<h4>Dear ${user.username},</h4><br/><p>To reset your password to your bLogger account, click the link below:</p> <p>${link}</p><br/><p>Your account information:</p> <p>Username: ${user.username}</p><br/><p>Should you have any questions or concerns, please contact me at prab.dhaliwal95@gmail.com or leave a comment on my tutorial blog on bLogger and I will get back to you.</p><br/><p>Sincerely,</p><p>Prabdeep Dhaliwal</p><p>https://www.bLogger.com</p>`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {

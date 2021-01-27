@@ -135,9 +135,23 @@
 }
 .comments-btn-containers {
   width: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: inline-block;
+  text-align: right;
+
+  .menu-btn {
+    display: inline-block;
+    font-size: var(--largeFont);
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  opacity: 0;
+}
+.edit-del-btn-container {
+  transition: all 500ms ease;
 }
 
 //############################ REPLY STYLING ############################//

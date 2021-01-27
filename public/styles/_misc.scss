@@ -24,14 +24,20 @@
   margin: auto;
 }
 
-.error-button {
+button.error-button {
   border: 0;
   outline: 0;
   font-size: 0.7rem;
   font-weight: 500;
-  color: black;
+  color: var(--dangerColor);
   background-color: transparent;
+  border: 2px solid var(--dangerColor);
   cursor: pointer;
+}
+
+button.error-button:hover {
+  color: white;
+  background-color: var(--dangerColor);
 }
 
 .success-bg {
@@ -185,12 +191,12 @@
   flex-direction: column;
 }
 
-.delete-window,
+.delete-account-window,
 .delete-article-window,
 .delete-comment-window,
 .delete-reply-window {
   max-width: 500px;
-  height: 250px;
+  height: 300px;
   position: fixed;
   top: 15%;
   right: 50%;

@@ -8,86 +8,89 @@
   <%- include('./_navbar.ejs')%>
 
   <main class="page-section">
-    <h3 class="main-header">Educational Blogs</h3>
+    <h3 class="main-header">Blogs</h3>
     <% if (user) { %>
     <a class="new-article-btn" href="/blogs/new">New Article</a>
     <% } %>
     <!-- Article Section -->
+    <% if (articles.length <= 0) { %>
+      <p style="text-align: center; margin-top: 50px;">There are no published articles at this time...</p>
+    <% } %>
     <% articles.forEach(article => { %>
 
-      <main class="delete-article-window hide" data-article-message-popup-container>
-        <div class="top-bar">
-          Message
-        </div>
-        <section class="message-content">
-          <p>Are you sure you want to permenantly delete this article?</p>
-          <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
-            <button type="submit" class="del-btn">Delete</button>
-            <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
-          </form>
-        </section>
-      </main>
+    <main class="delete-article-window hide" data-article-message-popup-container>
+      <div class="top-bar">
+        Message
+      </div>
+      <section class="message-content">
+        <p>Are you sure you want to permenantly delete this article?</p>
+        <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
+          <button type="submit" class="del-btn">Delete</button>
+          <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
+        </form>
+      </section>
+    </main>
 
-      <% if (user) { %>
-        <% if (article.published || user.username == article.createdUsername) { %>
-        <!-- Published Articles Shown To Public (Users) -->
-          <div class="article-container">
-            <div class="article-information">
-              <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-              <div class="article-author"><div><%= article.createdUsername %></div></div>
-              <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
-              <div class="article-description"><%= article.description %></div>
-            </div>
-            <% if (user.username == article.createdUsername) { %>
-            <div class="del-edit-btn-container">
-              <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
-              <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
-                <% if (article.published) { %>
-                  <button class="unpublish-btn" type="submit">Unpublish</button>
-                <% } else { %>
-                  <button class="publish-btn" type="submit">Publish</button>
-                <% } %>
-              </form>
-                <button class="del-btn" type="button" onclick="deleteArticleFunction('<%= article._id %>')" data-delete-article-button>Delete</button>
-            </div>
-            <% } %>
-          </div>
-        <% } else if (user.admin) { %>
-          <!-- All Articles (Published/Unpublished) Shown To Admin -->
-          <div class="article-container">
-            <div class="article-information">
-              <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-              <div class="article-author"><div><%= article.createdUsername %></div></div>
-              <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
-              <div class="article-description"><%= article.description %></div>
-            </div>
-            <% if (user.username == article.createdUsername) { %>
-              <!-- Edit, Publish or Delete Article Buttons Shown To Admin For Their Articles Only -->
-            <div class="del-edit-btn-container">
-              <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
-              <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
-                <% if (article.published) { %>
-                  <button class="unpublish-btn" type="submit">Unpublish</button>
-                <% } else { %>
-                  <button class="publish-btn" type="submit">Publish</button>
-                <% } %>
-              </form>
-              <button class="del-btn" type="button" data-delete-article-button>Delete</button>
-            </div>
-            <% } %>
-          </div>
-        <% } %> 
-      <% } else if (article.published && !user) { %>
-        <!-- Published Articles Shown To Public (Non-Users) -->
-        <div class="article-container">
-          <div class="article-information">
-            <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-            <div class="article-author"><div><%= article.createdUsername %></div></div>
-            <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
-            <div class="article-description"><%= article.description %></div>
-          </div>
+    <% if (user) { %>
+    <% if (article.published || user.username == article.createdUsername) { %>
+      <!-- Published Articles Shown To Public (Users) -->
+      <div class="article-container">
+        <div class="article-information">
+          <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+          <div class="article-author"><div><%= article.createdUsername %></div></div>
+          <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+          <div class="article-description"><%= article.description %></div>
         </div>
+        <% if (user.username == article.createdUsername) { %>
+        <div class="del-edit-btn-container">
+          <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
+          <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
+            <% if (article.published) { %>
+            <button class="unpublish-btn" type="submit">Unpublish</button>
+            <% } else { %>
+            <button class="publish-btn" type="submit">Publish</button>
+            <% } %>
+          </form>
+          <button class="del-btn" type="button" onclick="deleteArticleFunction('<%= article._id %>')" data-delete-article-button>Delete</button>
+        </div>
+        <% } %>
+      </div>
+    <% } else if (user.admin) { %>
+    <!-- All Articles (Published/Unpublished) Shown To Admin -->
+    <div class="article-container">
+      <div class="article-information">
+        <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+        <div class="article-author"><div><%= article.createdUsername %></div></div>
+        <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+        <div class="article-description"><%= article.description %></div>
+      </div>
+      <% if (user.username == article.createdUsername) { %>
+        <!-- Edit, Publish or Delete Article Buttons Shown To Admin For Their Articles Only -->
+      <div class="del-edit-btn-container">
+        <a class="edit-btn" href="/blogs/edit/<%= article._id %>">Edit</a>
+        <form action="/blogs/publish/<%= article._id %>?_method=PUT" method="POST">
+          <% if (article.published) { %>
+          <button class="unpublish-btn" type="submit">Unpublish</button>
+          <% } else { %>
+          <button class="publish-btn" type="submit">Publish</button>
+          <% } %>
+        </form>
+        <button class="del-btn" type="button" data-delete-article-button>Delete</button>
+      </div>
       <% } %>
+    </div>
+    <% } %> 
+    <% } else if (article.published && !user) { %>
+    <!-- Published Articles Shown To Public (Non-Users) -->
+    <div class="article-container">
+      <div class="article-information">
+        <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
+        <div class="article-author"><div><%= article.createdUsername %></div></div>
+        <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
+        <div class="article-description"><%= article.description %></div>
+      </div>
+    </div>
+    <% } %>
     <% }) %>
   </main>
 </body>

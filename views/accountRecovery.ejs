@@ -7,9 +7,10 @@
 <body>
   <%- include('./_navbar.ejs')%>
   
-  <main class="page-section">
-    <form class="account-form" action="/account/account-recovery" method="POST">
+  <main class="account-page-section">
+    <form class="basic-form" action="/account/account-recovery" method="POST">
       <h2>Recover Account</h2>
+      <br>
       <%- include('./_messages.ejs')%>
       <label>Email</label>
       <input type="email" name="email" placeholder="Enter your email">

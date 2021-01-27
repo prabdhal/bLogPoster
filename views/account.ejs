@@ -8,13 +8,13 @@
   <%- include('./_navbar.ejs')%>
   <section class="page-section">
 
-  <main class="delete-window hide" data-account-message-popup-container>
+  <main class="delete-account-window hide" data-account-message-popup-container>
     <div class="top-bar">
       Message
     </div>
     <section class="message-content">
       <p>Are you sure you want to permenantly delete your account?</p>
-      <form action="/blogs/<%= user._id %>?_method=DELETE" method="POST">
+      <form action="/account/delete/<%= user._id %>?_method=DELETE" method="POST">
         <button type="submit" class="del-btn">Delete</button>
         <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
       </form>
@@ -27,10 +27,11 @@
       <br>
       <%- include('./_messages.ejs') %>
       <% if (user.admin) { %>
-        <label>User Role: Admin</label>
+        <label>Role: Admin</label>
       <% } else { %>
-        <label>User Role: User</label>
+        <label>Role: User</label>
       <% } %>
+      <div style="margin:10px 0;">Email: <%= user.email %></div>
       <br>
       <br>
       <br>

@@ -20,7 +20,6 @@ function checkNotAuthenticated(req, res, next) {
 function checkValidated(req, res, next) {
   if (req.user) {
     if (!req.user.active) {
-      console.log('the user is not active');
       return res.redirect('/account');
     }
   }

@@ -26,7 +26,6 @@ router.get('/view/:slug', checkValidated, async (req, res) => {
     }
   }
   for (i = 0; i < allReplies.length; i++) {
-    console.log(allReplies[i].blogRef + ' vs ' + article._id);
     if (allReplies[i].blogRef == article._id) {
       replies.push(allReplies[i]);
     }
@@ -77,14 +76,12 @@ router.post('/new', checkValidated, checkAuthenticated, async (req, res) => {
 
   const saveArticle = await article.save((err, result) => {
     if (err) {
-      console.log(err);
       res.render('new', {
         title: 'New Article',
         article: new Article(),
         user,
       });
     } else {
-      console.log('article successfully saved!' + saveArticle);
       res.redirect(`/blogs/view/${article.slug}`);
     }
   });
@@ -107,10 +104,8 @@ router.post(
 
     const saveComment = await comments.save((err, result) => {
       if (err) {
-        console.log(err);
         res.redirect(`/blogs/view/${article.slug}`);
       } else {
-        console.log('article successfully saved!');
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });
@@ -136,10 +131,8 @@ router.post(
 
     const saveReply = await replies.save((err, result) => {
       if (err) {
-        console.log('An error occurred during save ' + err);
         res.redirect(`/blogs/view/${article.slug}`);
       } else {
-        console.log('reply successfully saved!' + result);
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });
@@ -163,10 +156,8 @@ router.put(
 
     const saveArticle = await article.save((err, result) => {
       if (err) {
-        console.log(err);
         res.render('new', { title: 'New Article', article, user: req.user });
       } else {
-        console.log('article successfully saved!' + result);
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });
@@ -181,16 +172,12 @@ router.put(
   async (req, res) => {
     const article = await Article.findById(req.params.id);
 
-    console.log('article is currently: ' + article.published);
     article.published = !article.published;
-    console.log('article is now: ' + article.published);
 
     const saveArticle = await article.save((err, result) => {
       if (err) {
-        console.log(err);
         res.redirect('/blogs');
       } else {
-        console.log('article successfully saved!' + result);
         res.redirect('/blogs');
       }
     });
@@ -211,10 +198,8 @@ router.put(
 
     const saveComment = await userComment.save((err, result) => {
       if (err) {
-        console.log(err);
         res.redirect(`/blogs/view/${article.slug}`);
       } else {
-        console.log('comment successfully saved!' + result);
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });
@@ -236,10 +221,8 @@ router.put(
 
     const saveComment = await reply.save((err, result) => {
       if (err) {
-        console.log(err);
         res.redirect(`/blogs/view/${article.slug}`);
       } else {
-        console.log('comment successfully saved!' + result);
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });
@@ -271,10 +254,8 @@ router.put(
 
     const saveComment = await comment.save((err, result) => {
       if (err) {
-        console.log('An error occurred during save ' + err);
         res.redirect('/blogs');
       } else {
-        console.log('article successfully saved!' + result);
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });
@@ -306,10 +287,8 @@ router.put(
 
     const saveReply = await reply.save((err, result) => {
       if (err) {
-        console.log('An error occurred during save ' + err);
         res.redirect(`/blogs/view/${article.slug}`);
       } else {
-        console.log('reply successfully saved!' + result);
         res.redirect(`/blogs/view/${article.slug}`);
       }
     });

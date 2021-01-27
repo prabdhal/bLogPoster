@@ -11,7 +11,6 @@ module.exports = function (passport) {
       { usernameField: 'username' },
       (username, password, done) => {
         // Match User
-        console.log('matching username');
         User.findOne({ username: username })
           .then((user) => {
             if (!user) {
@@ -20,7 +19,6 @@ module.exports = function (passport) {
               });
             }
 
-            console.log('matching password');
             // Match password
             bcrypt.compare(password, user.password, (err, isMatch) => {
               if (err) throw err;

@@ -17,6 +17,8 @@ nav div {
 
 .home-link {
   padding: var(--btnPadding);
+  font-size: var(--mediumFont);
+  transition: var(--btnTransition);
 }
 
 .account-links {
@@ -29,6 +31,7 @@ nav div {
 .account-link:hover,
 .home-link:hover {
   color: var(--complementaryColor3);
+  transition: var(--btnTransition);
 }
 
 nav div a:hover {

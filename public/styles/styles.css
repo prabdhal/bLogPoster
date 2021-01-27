@@ -136,6 +136,9 @@ nav div a {
 
 .home-link {
   padding: var(--btnPadding);
+  font-size: var(--mediumFont);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
 }
 
 .account-links {
@@ -152,6 +155,8 @@ nav div a {
 .account-link:hover,
 .home-link:hover {
   color: var(--complementaryColor3);
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
 }
 
 nav div a:hover {
@@ -194,7 +199,6 @@ nav div a:hover {
 
 .article-container .article-information .article-author div {
   margin-top: 10px;
-  margin-left: 10px;
 }
 
 .article-container .article-information .article-author .author-img {
@@ -322,7 +326,6 @@ nav div a:hover {
 
 .view-article .article-author div {
   margin-top: 10px;
-  margin-left: 10px;
 }
 
 .view-article .article-author .author-img {
@@ -637,16 +640,25 @@ nav div a:hover {
 
 .comments-btn-containers {
   width: 80px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  display: inline-block;
+  text-align: right;
+}
+
+.comments-btn-containers .menu-btn {
+  display: inline-block;
+  font-size: var(--largeFont);
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.edit-del-btn-container {
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
 }
 
 .reply-comment-form span {
@@ -773,14 +785,20 @@ nav div a:hover {
   margin: auto;
 }
 
-.error-button {
+button.error-button {
   border: 0;
   outline: 0;
   font-size: 0.7rem;
   font-weight: 500;
-  color: black;
+  color: var(--dangerColor);
   background-color: transparent;
+  border: 2px solid var(--dangerColor);
   cursor: pointer;
+}
+
+button.error-button:hover {
+  color: white;
+  background-color: var(--dangerColor);
 }
 
 .success-bg {
@@ -950,12 +968,12 @@ nav div a:hover {
           flex-direction: column;
 }
 
-.delete-window,
+.delete-account-window,
 .delete-article-window,
 .delete-comment-window,
 .delete-reply-window {
   max-width: 500px;
-  height: 250px;
+  height: 300px;
   position: fixed;
   top: 15%;
   right: 50%;
@@ -1026,6 +1044,9 @@ nav div a:hover {
 @media only screen and (max-width: 700px) {
   .message-content {
     padding: 20px 0;
+  }
+  .message-content form button {
+    margin: 5px 10px;
   }
 }
 /*# sourceMappingURL=styles.css.map */
