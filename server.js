@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
 const flash = require('express-flash');
@@ -30,7 +29,6 @@ app.listen(port, console.log(`Listening to port ${port}`));
 // Middleware
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(morgan('dev')); // helps with console logging http requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
