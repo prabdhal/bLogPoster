@@ -32,6 +32,7 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
 router.get('/verify-account/:userId/:verifyCode', async (req, res) => {
   const user = await User.findOne({ _id: req.params.userId });
 
+  console.log(user);
   // verification code does not exist
   const verify = await VerifyAccount.findOne({ email: user.email });
   if (!verify) {
@@ -58,8 +59,7 @@ router.get('/verify-account/:userId/:verifyCode', async (req, res) => {
   await VerifyAccount.findOneAndDelete({ email: user.email });
 
   req.flash('success_msg', 'You have successfully verified your account');
-  req.logIn();
-  res.redirect('/account');
+  res.redirect('/account/login');
 });
 
 // account recovery page where user enters email to reset account
@@ -218,6 +218,49 @@ router.post('/account-recovery', async (req, res) => {
   res.redirect('/account/account-recovery');
 });
 
+router.put('/reset-password/:id', async (req, res) => {
+  const { password, confirmPassword } = req.body;
+  let user = await User.findById(req.params.id);
+
+  let errors = [];
+
+  if (!password || !confirmPassword)
+    errors.push('Not all fields have been entered');
+  if (password.length <= 7)
+    errors.push('Password must contain at least 8 characters');
+  if (password.search(/[a-z]/i) < 0)
+    errors.push('Password must contain at least one letter');
+  if (password.search(/[0-9]/) < 0)
+    errors.push('Password must contain at least one digit');
+  if (password !== confirmPassword) errors.push('Passwords do not match');
+  if (password === user.username || password === user.email)
+    errors.push('Password can not match your username or email');
+
+  // return out if there are any errors with validation
+  if (errors.length > 0) {
+    return res.render('resetPassword', {
+      title: 'Reset Password',
+      errors,
+      user,
+    });
+  }
+
+  // hash passwords
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  user.password = hashedPassword;
+
+  await user.save((err, result) => {
+    if (err) {
+      console.log(err);
+      res.render('resetPassword', { title: 'Reset Password', user });
+    } else {
+      console.log('article successfully saved!' + result);
+      res.redirect('/account/login');
+    }
+  });
+});
+
 // user logout
 router.get('/logout', checkAuthenticated, async (req, res) => {
   req.logout();
@@ -285,48 +328,5 @@ function mailResetPassword(user, verify, email) {
     }
   });
 }
-
-router.put('/reset-password/:id', async (req, res) => {
-  const { password, confirmPassword } = req.body;
-  let user = await User.findById(req.params.id);
-
-  let errors = [];
-
-  if (!password || !confirmPassword)
-    errors.push('Not all fields have been entered');
-  if (password.length <= 7)
-    errors.push('Password must contain at least 8 characters');
-  if (password.search(/[a-z]/i) < 0)
-    errors.push('Password must contain at least one letter');
-  if (password.search(/[0-9]/) < 0)
-    errors.push('Password must contain at least one digit');
-  if (password !== confirmPassword) errors.push('Passwords do not match');
-  if (password === user.username || password === user.email)
-    errors.push('Password can not match your username or email');
-
-  // return out if there are any errors with validation
-  if (errors.length > 0) {
-    return res.render('resetPassword', {
-      title: 'Reset Password',
-      errors,
-      user,
-    });
-  }
-
-  // hash passwords
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  user.password = hashedPassword;
-
-  await user.save((err, result) => {
-    if (err) {
-      console.log(err);
-      res.render('resetPassword', { title: 'Reset Password', user });
-    } else {
-      console.log('article successfully saved!' + result);
-      res.redirect('/account/login');
-    }
-  });
-});
 
 module.exports = router;

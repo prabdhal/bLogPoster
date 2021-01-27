@@ -10,17 +10,31 @@
   <main class="page-section">
     <h3 class="main-header">Educational Blogs</h3>
     <% if (user) { %>
-      <a class="new-article-btn" href="/blogs/new">New Article</a>
+    <a class="new-article-btn" href="/blogs/new">New Article</a>
     <% } %>
     <!-- Article Section -->
     <% articles.forEach(article => { %>
+
+      <main class="delete-article-window hide" data-article-message-popup-container>
+        <div class="top-bar">
+          Message
+        </div>
+        <section class="message-content">
+          <p>Are you sure you want to permenantly delete this article?</p>
+          <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="del-btn">Delete</button>
+            <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
+          </form>
+        </section>
+      </main>
+
       <% if (user) { %>
         <% if (article.published || user.username == article.createdUsername) { %>
         <!-- Published Articles Shown To Public (Users) -->
           <div class="article-container">
             <div class="article-information">
               <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-              <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.createdUsername %></div></div>
+              <div class="article-author"><div><%= article.createdUsername %></div></div>
               <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
               <div class="article-description"><%= article.description %></div>
             </div>
@@ -34,9 +48,7 @@
                   <button class="publish-btn" type="submit">Publish</button>
                 <% } %>
               </form>
-              <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
-                <button class="del-btn" type="submit">Delete</button>
-              </form>
+                <button class="del-btn" type="button" onclick="deleteArticleFunction('<%= article._id %>')" data-delete-article-button>Delete</button>
             </div>
             <% } %>
           </div>
@@ -45,7 +57,7 @@
           <div class="article-container">
             <div class="article-information">
               <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-              <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.createdUsername %></div></div>
+              <div class="article-author"><div><%= article.createdUsername %></div></div>
               <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
               <div class="article-description"><%= article.description %></div>
             </div>
@@ -60,9 +72,7 @@
                   <button class="publish-btn" type="submit">Publish</button>
                 <% } %>
               </form>
-              <form action="/blogs/<%= article._id %>?_method=DELETE" method="POST">
-                <button class="del-btn" type="submit">Delete</button>
-              </form>
+              <button class="del-btn" type="button" data-delete-article-button>Delete</button>
             </div>
             <% } %>
           </div>
@@ -72,7 +82,7 @@
         <div class="article-container">
           <div class="article-information">
             <h4 class="article-title"><a href="/blogs/view/<%= article.slug %>"><%= article.title %></a></h4>
-            <div class="article-author"><img class="author-img" src="/imgs/Prabdeep.png" alt="Prabdeep Dhaliwal"><div><%= article.createdUsername %></div></div>
+            <div class="article-author"><div><%= article.createdUsername %></div></div>
             <div class="article-date"><%= article.createdAt.toLocaleDateString() %></div>
             <div class="article-description"><%= article.description %></div>
           </div>

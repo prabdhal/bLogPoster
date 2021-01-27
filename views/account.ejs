@@ -7,6 +7,20 @@
 <body>
   <%- include('./_navbar.ejs')%>
   <section class="page-section">
+
+  <main class="delete-window hide" data-account-message-popup-container>
+    <div class="top-bar">
+      Message
+    </div>
+    <section class="message-content">
+      <p>Are you sure you want to permenantly delete your account?</p>
+      <form action="/blogs/<%= user._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="del-btn">Delete</button>
+        <button type="button" class="cancel-btn" data-cancel-btn>Cancel</button>
+      </form>
+    </section>
+  </main>
+
     <h3 class="main-header">Account</h3>
     <main class="account-section">
       <h3>Welcome, <%= user.username %></h3>
@@ -26,9 +40,7 @@
           <button type="submit" class="verification-btn">Resend</button> verification code to <%= user.email %>
         </form>
       <% } %>
-      <form action="/account/delete/<%= user._id %>?_method=DELETE" method="POST">
-        <button type="submit" class="del-account-btn">Delete Account</button>
-      </form>
+        <button type="button" class="del-account-btn" onclick="deleteAccountFunction('<%= user._id %>')" data-delete-account-button>Delete Account</button>
     </main>
   </section>
 </body>
