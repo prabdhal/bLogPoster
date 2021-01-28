@@ -33,21 +33,21 @@ function deleteAccountFunction(id) {
 
 function deleteArticleFunction(id) {
   dataArticleMessagePopupContainer.forEach((articlePopup) => {
-    articlePopup.lastChild.previousSibling.lastChild.previousSibling.action = `/bLogger/${id}?_method=DELETE`;
+    articlePopup.lastChild.previousSibling.lastChild.previousSibling.action = `/bLogPoster/${id}?_method=DELETE`;
     openMessagePopup('article');
   });
 }
 
 function deleteCommentFunction(articleSlug, commentId) {
   dataCommentMessagePopupContainer.forEach((commentPopup) => {
-    commentPopup.lastChild.previousSibling.lastChild.previousSibling.action = `/bLogger/view/${articleSlug}/comment/${commentId}?_method=DELETE`;
+    commentPopup.lastChild.previousSibling.lastChild.previousSibling.action = `/bLogPoster/view/${articleSlug}/comment/${commentId}?_method=DELETE`;
     openMessagePopup('comment');
   });
 }
 
 function deleteReplyFunction(articleSlug, commentId, replyId) {
   dataReplyMessagePopupContainer.forEach((replyPopup) => {
-    replyPopup.lastChild.previousSibling.lastChild.previousSibling.action = `/bLogger/view/${articleSlug}/comment/${commentId}/reply/${replyId}?_method=DELETE`;
+    replyPopup.lastChild.previousSibling.lastChild.previousSibling.action = `/bLogPoster/view/${articleSlug}/comment/${commentId}/reply/${replyId}?_method=DELETE`;
     openMessagePopup('reply');
   });
 }

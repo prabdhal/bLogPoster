@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('./_head.ejs') %>
-  <title>bLogger - <%= title%></title>
+  <title>bLogPoster - <%= title%></title>
 </head>
 <body>
   <%- include('./_navbar.ejs')%>
@@ -11,10 +11,10 @@
     <main class="article-section"> 
       <!-- VIEW ARTICLE PAGE BUTTONS -->
       <div style="width:100%; display:flex; justify-content: flex-start;">
-        <a class="cancel-btn" href="/bLogger">Cancel</a>
+        <a class="cancel-btn" href="/bLogPoster">Cancel</a>
       </div>
       <h3 class="main-header">Edit Blog</h3>
-      <form class="article-form" action="/bLogger/edit/<%= article._id %>?_method=PUT" method="POST">
+      <form class="article-form" action="/bLogPoster/edit/<%= article._id %>?_method=PUT" method="POST">
         <%- include('./_article_form.ejs')%>
       </form>
     </main>

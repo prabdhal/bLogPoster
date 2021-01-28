@@ -1,7 +1,8 @@
 <nav>
-  <div><a href="/" class="home-link">bLogger</a></div>
+  <div><a href="/bLogPoster" class="home-link">bLogPoster</a></div>
   <% if (!user) { %>
-  <div class="account-links">
+  <div class="account-links notLogged">
+    <a href="/bLogPoster/posts" class="account-link">Blogs</a>
     <a href="/account/login" class="account-link">Login</a>
     <a href="/account/register" class="account-link">Register</a>
   </div>

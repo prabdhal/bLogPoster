@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get('/', (req, res) => {
-  res.redirect('/bLogger');
+  res.redirect('/bLogPoster');
 });
-app.use('/bLogger', blogRoutes);
+app.use('/bLogPoster', blogRoutes);
 app.use('/account', userRoutes);

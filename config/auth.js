@@ -16,6 +16,19 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
+// allows only logged out users to access landing page
+function checkNotLoggedIn(req, res, next) {
+  console.log('checking if user logged in');
+  if (req.isAuthenticated()) {
+    console.log('user is logged in and now redirecting to (/bLogPoster/posts)');
+    res.redirect('/bLogPoster/posts');
+    return;
+  }
+
+  console.log('user is not logged in');
+  next();
+}
+
 // allows only verified users to access specific routes
 function checkValidated(req, res, next) {
   if (req.user) {
@@ -27,4 +40,9 @@ function checkValidated(req, res, next) {
   next();
 }
 
-module.exports = { checkAuthenticated, checkNotAuthenticated, checkValidated };
+module.exports = {
+  checkAuthenticated,
+  checkNotAuthenticated,
+  checkValidated,
+  checkNotLoggedIn,
+};
