@@ -9,7 +9,7 @@
         "_Account.scss",
         "_Comments.scss",
         "_Misc.scss",
-        "_Start.scss"
+        "_Intro.scss"
     ],
     "names": [],
     "file": "styles.css"
