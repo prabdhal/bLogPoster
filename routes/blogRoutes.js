@@ -18,7 +18,6 @@ router.get('/posts', async (req, res) => {
 
   res.render('index', { title: 'Home', articles, user: req.user });
 });
-
 // view an article and all corresponding comments
 router.get('/view/:slug', checkValidated, async (req, res) => {
   const article = await Article.findOne({ slug: req.params.slug });

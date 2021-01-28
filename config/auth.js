@@ -18,14 +18,11 @@ function checkNotAuthenticated(req, res, next) {
 
 // allows only logged out users to access landing page
 function checkNotLoggedIn(req, res, next) {
-  console.log('checking if user logged in');
   if (req.isAuthenticated()) {
-    console.log('user is logged in and now redirecting to (/bLogPoster/posts)');
     res.redirect('/bLogPoster/posts');
     return;
   }
 
-  console.log('user is not logged in');
   next();
 }
 
