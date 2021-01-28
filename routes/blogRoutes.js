@@ -10,7 +10,7 @@ const {
 
 // get landing page for website
 router.get('/', checkNotLoggedIn, (req, res) => {
-  res.render('intro', { title: 'Get Started', user: req.user });
+  res.render('start', { title: 'Get Started', user: req.user });
 });
 // get blogs home page
 router.get('/posts', async (req, res) => {
