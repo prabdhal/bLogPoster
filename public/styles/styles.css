@@ -69,7 +69,7 @@ a {
   --btnPadding: 5px 10px;
   --btnWidth: 80px;
   --btnShade: 0.5px 0.5px 2px black, -0.5px -0.5px 2px black;
-  --navHeight: 80px;
+  --navHeight: 100px;
   --baseWidth: 700px;
   --btnTransition: all 500ms ease;
 }
@@ -95,7 +95,7 @@ a {
       -ms-flex-direction: column;
           flex-direction: column;
   margin: auto;
-  padding: 5%;
+  padding: 5% 0;
 }
 
 .account-page-section {
@@ -109,7 +109,19 @@ a {
       -ms-flex-direction: column;
           flex-direction: column;
   margin: auto;
-  padding: 5%;
+  padding: 5% 0;
+}
+
+.full-page {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto;
 }
 
 nav {
@@ -819,6 +831,20 @@ button.error-button:hover {
   list-style: none;
 }
 
+.basic-btn {
+  border: 0;
+  outline: 0;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 5px 0;
+  color: white;
+  text-decoration: none;
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
 .back-btn {
   width: var(--btnWidth);
   max-height: 29px;
@@ -886,6 +912,7 @@ button.error-button:hover {
   border-radius: var(--btnRadius);
   margin: 5px 0;
   color: white;
+  text-decoration: none;
   border: 2px solid var(--secondaryColor);
   background-color: var(--secondaryColor);
   -webkit-transition: var(--btnTransition);
@@ -1013,6 +1040,93 @@ button.error-button:hover {
   margin: 0 30px;
 }
 
+.ad-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 600px;
+  padding: 100px 50px;
+  color: white;
+}
+
+.ad-container h1 {
+  font-size: var(--hugeFont);
+  margin-left: 50px;
+}
+
+.ad-container h5 {
+  font-size: var(--mediumFont);
+  margin: 20px 0 0 75px;
+  font-weight: 500;
+}
+
+.ad-container div:last-child {
+  margin: auto;
+}
+
+.ad-container div:last-child a {
+  font-size: var(--mediumFont);
+}
+
+.clip-path1 {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 68%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0, 100% 68%, 0% 100%);
+}
+
+.clip-path2 {
+  -webkit-clip-path: polygon(0 0, 100% 28%, 100% 100%, 0 100%);
+          clip-path: polygon(0 0, 100% 28%, 100% 100%, 0 100%);
+}
+
+.ad-container:first-child {
+  height: 90vh;
+}
+
+.ad-container:nth-child(3) {
+  padding: 150px 50px 0 50px;
+}
+
+.ad-container:nth-child(4) {
+  padding: 200px 50px 50px 50px;
+}
+
+.spacer {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.color1 {
+  background-color: #21b1bf;
+}
+
+.color2 {
+  background-color: #c0d70b;
+}
+
+.color3 {
+  background-color: #ee6c4d;
+}
+
+.color4 {
+  background-color: #6e0d25;
+}
+
+.btn-color1 {
+  width: 150px;
+  background-color: #ff9f1c;
+  border: 2px solid #ff9f1c;
+}
+
+.btn-color1:hover {
+  background-color: transparent;
+  border: 2px solid #ff9f1c;
+}
+
 .primary-color-bg {
   background-color: var(--primaryColor);
 }
@@ -1047,6 +1161,27 @@ button.error-button:hover {
   }
   .message-content form button {
     margin: 5px 10px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .ad-container {
+    padding: 50px 20px;
+  }
+  .ad-container h1 {
+    margin-left: 0px;
+  }
+  .ad-container h5 {
+    margin: 20px 0 0 25px;
+  }
+  .ad-container:first-child {
+    height: 600px;
+  }
+  .ad-container:nth-child(3) {
+    padding: 75px 20px 0 20px;
+  }
+  .ad-container:nth-child(4) {
+    padding: 150px 20px 50px 20px;
   }
 }
 /*# sourceMappingURL=styles.css.map */

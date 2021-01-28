@@ -2,10 +2,18 @@ const router = require('express').Router();
 const Article = require('../models/articleSchema');
 const Comment = require('../models/commentSchema');
 const Reply = require('../models/replySchema');
-const { checkAuthenticated, checkValidated } = require('../config/auth');
+const {
+  checkAuthenticated,
+  checkNotAuthenticated,
+  checkValidated,
+} = require('../config/auth');
 
+// get landing page for website
+router.get('/', checkNotAuthenticated, (req, res) => {
+  res.render('intro', { title: 'Get Started', user: req.user });
+});
 // get blogs home page
-router.get('/', async (req, res) => {
+router.get('/posts', async (req, res) => {
   const articles = await Article.find().sort({ createdAt: 'desc' });
 
   res.render('index', { title: 'Home', articles, user: req.user });

@@ -55,6 +55,19 @@ button.error-button:hover {
 //###################### BUTTONS ######################//
 
 // BUTTONS
+.basic-btn {
+  border: 0;
+  outline: 0;
+  width: var(--btnWidth);
+  padding: var(--btnPadding);
+  border-radius: var(--btnRadius);
+  margin: 5px 0;
+  color: white;
+  text-decoration: none;
+  transition: var(--btnTransition);
+  cursor: pointer;
+}
+
 .back-btn {
   width: var(--btnWidth);
   max-height: 29px;
@@ -119,6 +132,7 @@ button.error-button:hover {
   border-radius: var(--btnRadius);
   margin: 5px 0;
   color: white;
+  text-decoration: none;
   border: 2px solid var(--secondaryColor);
   background-color: var(--secondaryColor);
   transition: var(--btnTransition);
