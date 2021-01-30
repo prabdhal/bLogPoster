@@ -59,8 +59,8 @@ a {
   --warningColor: lightcoral;
   --successColor: green;
   --smallFont: 0.8rem;
-  --regularFont: 1rem;
-  --mediumFont: 1.5rem;
+  --regularFont: 1.2rem;
+  --mediumFont: 1.8rem;
   --largeFont: 2rem;
   --hugeFont: 3rem;
   --LargestFont: 4rem;
@@ -289,6 +289,16 @@ nav div a:hover {
   display: flex;
 }
 
+.article-container .article-title {
+  font-size: var(--mediumFont);
+  line-height: 1.6rem;
+}
+
+.article-container .article-description {
+  font-size: var(--regularFont);
+  line-height: 1.6rem;
+}
+
 .view-article-btns {
   width: 100%;
   height: 75px;
@@ -419,6 +429,10 @@ nav div a:hover {
           flex-direction: column;
   text-align: center;
   margin: 0 auto;
+}
+
+.basic-form h2 {
+  font-size: var(--mediumFont);
 }
 
 .basic-form label {
@@ -574,7 +588,9 @@ nav div a:hover {
 }
 
 .comment-and-edit-input-container .comment {
+  font-size: var(--regularFont);
   padding-bottom: 10px;
+  line-height: 1.6rem;
 }
 
 .comment-and-edit-input-container form {
@@ -595,6 +611,10 @@ nav div a:hover {
 .comment-and-edit-input-container form input:hover,
 .comment-and-edit-input-container form input:focus {
   background-size: 100% 2px;
+}
+
+.comment-author {
+  font-size: var(--regularFont);
 }
 
 .comment-like-reply-btn-container {

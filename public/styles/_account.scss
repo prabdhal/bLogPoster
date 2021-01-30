@@ -6,6 +6,10 @@
   text-align: center;
   margin: 0 auto;
 
+  h2 {
+    font-size: var(--mediumFont);
+  }
+
   label {
     margin: 20px 0 10px 0;
   }

@@ -62,7 +62,9 @@
 .comment-and-edit-input-container {
   margin-top: 20px;
   .comment {
+    font-size: var(--regularFont);
     padding-bottom: 10px;
+    line-height: 1.6rem;
   }
   form {
     width: 100%;
@@ -81,6 +83,10 @@
       background-size: 100% 2px;
     }
   }
+}
+
+.comment-author {
+  font-size: var(--regularFont);
 }
 
 .comment-like-reply-btn-container {

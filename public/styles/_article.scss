@@ -11,6 +11,16 @@
   max-width: var(--baseWidth);
   width: 100%;
   display: flex;
+
+  .article-title {
+    font-size: var(--mediumFont);
+    line-height: 1.6rem;
+  }
+
+  .article-description {
+    font-size: var(--regularFont);
+    line-height: 1.6rem;
+  }
 }
 
 .view-article-btns {

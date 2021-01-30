@@ -8,7 +8,6 @@
   <%- include('./_navbar.ejs')%>
 
   <main class="page-section">    
-
     <main class="delete-article-window hide" data-article-message-popup-container>
       <div class="top-bar">
         Message
@@ -68,7 +67,7 @@
             <div class="comment-info">
               <!-- comment information -->
               <span>
-                <b><%= comment.author %></b>
+                <b class="comment-author"><%= comment.author %></b>
                 <span class="comment-date"><%= comment.createdAt.toDateString() %> <%= comment.createdAt.toLocaleTimeString() %></span>
               </span>
               <!-- comment and edit input container -->
@@ -133,7 +132,7 @@
             <div class="comment-info">
               <!-- reply information -->
               <span>
-                <b><%= reply.author %></b>
+                <b class="comment-author"><%= reply.author %></b>
                 <span class="comment-date"><%= reply.createdAt.toDateString() %> <%= reply.createdAt.toLocaleTimeString() %></span>
               </span>
               <!-- reply and edit input container -->
