@@ -11,7 +11,7 @@ body {
 }
 
 button {
-  font-size: var(--regularFont);
+  font-size: var(--smallFont);
   font-family: 'Roboto', sans-serif;
 }
 
