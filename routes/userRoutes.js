@@ -285,7 +285,7 @@ function makeid(length) {
 
 // mail verfication code for account validation
 function mailVerificationCode(user, verify, email) {
-  let link = `http://localhost:3000/account/verify-account/${user._id}/${verify.code}`;
+  let link = `https://blogposter-website.herokuapp.com/account/verify-account/${user._id}/${verify.code}`;
 
   const mailOptions = {
     from: process.env.EMAIL,
@@ -305,7 +305,7 @@ function mailVerificationCode(user, verify, email) {
 
 // mail verfication code for password reset
 function mailResetPassword(user, verify, email) {
-  let link = `http://localhost:3000/account/account-recovery/${user._id}/${verify.code}`;
+  let link = `https://blogposter-website.herokuapp.com/account/verify-account/${user._id}/${verify.code}`;
 
   const mailOptions = {
     from: process.env.EMAIL,
