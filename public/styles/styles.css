@@ -11,7 +11,7 @@ body {
 }
 
 button {
-  font-size: var(--smallFont);
+  font-size: var(--regularFont);
   font-family: 'Roboto', sans-serif;
 }
 
@@ -155,7 +155,7 @@ nav div a {
 }
 
 .account-links {
-  width: 130px;
+  width: 170px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -166,7 +166,7 @@ nav div a {
 }
 
 .notLogged {
-  width: 200px;
+  width: 250px;
 }
 
 .account-link:hover,
