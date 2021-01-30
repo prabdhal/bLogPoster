@@ -8,7 +8,7 @@
   <%- include('./_navbar.ejs')%>
 
   <main class="page-section">
-    <h3 class="main-header">Blogs</h3>
+    <h3 class="main-header">Posted Blogs</h3>
     <% if (user) { %>
     <a class="new-article-btn" href="/bLogPoster/new">New Blog</a>
     <% } %>
@@ -17,7 +17,6 @@
       <p style="text-align: center; margin-top: 50px;">There are no published articles at this time...</p>
     <% } %>
     <% articles.forEach(article => { %>
-
     <main class="delete-article-window hide" data-article-message-popup-container>
       <div class="top-bar">
         Message
