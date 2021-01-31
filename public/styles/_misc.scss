@@ -200,9 +200,11 @@ button.error-button:hover {
 }
 
 .del-edit-btn-container {
+  width: 100%;
   width: 80px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .delete-account-window,

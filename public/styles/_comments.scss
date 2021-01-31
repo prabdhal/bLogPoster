@@ -140,23 +140,17 @@
 }
 .comments-btn-containers {
   width: 80px;
-  display: inline-block;
+  height: 50%;
+  display: flex;
+  justify-content: flex-start;
   text-align: right;
-
-  .menu-btn {
-    display: inline-block;
-    font-size: var(--largeFont);
-    text-align: center;
-    margin: auto;
-    cursor: pointer;
-  }
+  transition: var(--btnTransition);
 }
-
 .hidden {
   opacity: 0;
 }
-.edit-del-btn-container {
-  transition: all 500ms ease;
+.del-edit-btn-container {
+  transition: var(--btnTransition);
 }
 
 //############################ REPLY STYLING ############################//

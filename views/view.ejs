@@ -93,11 +93,11 @@
             <div class="comments-btn-containers">
               <% if (user) { %>
               <% if (user.username == comment.author) { %>
-              <div class="menu-btn" data-comment-menu-button>&#10247;</div>
-              <form class="edit-del-btn-container hidden">
+              <form class="del-edit-btn-container hidden">
                 <button type="button" class="edit-btn" data-edit-comment-button>Edit</button>
                 <button type="button" class="del-btn" onclick="deleteCommentFunction('<%= article.slug %>', '<%= comment._id %>')" data-delete-comment-button>Delete</button>
               </form>
+              <div class="menu-btn" data-comment-menu-button>&#10247;</div>
               <% } %>
               <% } %>
             </div>
@@ -156,11 +156,11 @@
             <div class="comments-btn-containers">
               <% if (user) { %>
               <% if (user.username == reply.author) { %>
-                <div class="menu-btn" data-comment-menu-button>&#10247;</div>
-              <form class="edit-del-btn-container hidden">
+              <form class="del-edit-btn-container hidden">
                 <button type="button" class="edit-btn" data-edit-comment-button>Edit</button>
                 <button type="button" class="del-btn" onclick="deleteReplyFunction('<%= article.slug %>', '<%= comment._id %>', '<%= reply._id %>')" data-delete-reply-button>Delete</button>
               </form>
+              <div class="menu-btn" data-comment-menu-button>&#10247;</div>
               <% } %>
               <% } %>
             </div>

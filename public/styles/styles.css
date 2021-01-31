@@ -125,6 +125,14 @@ a {
   margin: auto;
 }
 
+.menu-btn {
+  display: inline-block;
+  font-size: var(--largeFont);
+  text-align: center;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
 nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -234,18 +242,6 @@ nav div a:hover {
   margin-top: 10px;
 }
 
-.article-container .del-edit-btn-container {
-  width: 100%;
-  max-width: 75px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
 .new-article-btn {
   max-width: 100px;
   max-height: 30px;
@@ -318,21 +314,6 @@ nav div a:hover {
 .view-article-btns .back-btn {
   width: 100%;
   max-width: 75px;
-}
-
-.view-article-btns .del-edit-btn-container {
-  width: 100%;
-  max-width: 75px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 
 .view-article .article-title {
@@ -676,25 +657,25 @@ nav div a:hover {
 
 .comments-btn-containers {
   width: 80px;
-  display: inline-block;
+  height: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   text-align: right;
-}
-
-.comments-btn-containers .menu-btn {
-  display: inline-block;
-  font-size: var(--largeFont);
-  text-align: center;
-  margin: auto;
-  cursor: pointer;
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
 }
 
 .hidden {
   opacity: 0;
 }
 
-.edit-del-btn-container {
-  -webkit-transition: all 500ms ease;
-  transition: all 500ms ease;
+.del-edit-btn-container {
+  -webkit-transition: var(--btnTransition);
+  transition: var(--btnTransition);
 }
 
 .reply-comment-form span {
@@ -1009,6 +990,7 @@ button.error-button:hover {
 }
 
 .del-edit-btn-container {
+  width: 100%;
   width: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1017,6 +999,9 @@ button.error-button:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .delete-account-window,

@@ -41,7 +41,7 @@
           <div class="article-description"><%= article.description %></div>
         </div>
         <% if (user.username == article.createdUsername) { %>
-        <div class="del-edit-btn-container">
+        <div class="del-edit-btn-container hidden">
           <a class="edit-btn" href="/bLogPoster/edit/<%= article._id %>">Edit</a>
           <form action="/bLogPoster/publish/<%= article._id %>?_method=PUT" method="POST">
             <% if (article.published) { %>
@@ -52,6 +52,7 @@
           </form>
           <button class="del-btn" type="button" onclick="deleteArticleFunction('<%= article._id %>')" data-delete-article-button>Delete</button>
         </div>
+        <div class="menu-btn" data-comment-menu-button>&#10247;</div>
         <% } %>
       </div>
     <% } else if (user.admin) { %>

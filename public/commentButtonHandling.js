@@ -105,13 +105,13 @@ function closeAllEditContainers() {
 dataCommentMenuButton.forEach((menuButton) => {
   menuButton.addEventListener('click', () => {
     hideAllModifyButtons(menuButton);
-    menuButton.nextElementSibling.classList.toggle('hidden');
+    menuButton.previousElementSibling.classList.toggle('hidden');
   });
 });
 
 function hideAllModifyButtons(button) {
   dataCommentMenuButton.forEach((menuButton) => {
     if (menuButton != button)
-      menuButton.nextElementSibling.classList.add('hidden');
+      menuButton.previousElementSibling.classList.add('hidden');
   });
 }

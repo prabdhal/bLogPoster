@@ -89,6 +89,14 @@ a {
   margin: auto;
 }
 
+.menu-btn {
+  display: inline-block;
+  font-size: var(--largeFont);
+  text-align: center;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
 @import 'Navbar';
 @import 'Home';
 @import 'Article';
