@@ -4,6 +4,10 @@ const VerifyAccount = require('../models/verifyCodeSchema');
 const { checkAuthenticated, checkNotAuthenticated } = require('../config/auth');
 const passport = require('passport');
 const transporter = require('../config/nodemailer');
+const {
+  passwordResetValidation,
+  registrationValidation,
+} = require('../config/userValidation');
 
 const router = require('express').Router();
 
@@ -101,20 +105,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
   let admin = false;
 
   // validate user registration information
-  if (!username || !email || !password || !confirmPassword)
-    errors.push('Not all fields have been entered');
-  if (username.length <= 5)
-    errors.push('Username must contain at least 6 characters');
-  if (password.length <= 7)
-    errors.push('Password must contain at least 8 characters');
-  if (password.search(/[a-z]/i) < 0)
-    errors.push('Password must contain at least one letter');
-  if (password.search(/[0-9]/) < 0)
-    errors.push('Password must contain at least one digit');
-  if (password !== confirmPassword) errors.push('Passwords do not match');
-  if (password === username || password === email)
-    errors.push('Password can not match your username or email');
-  if (adminCode === process.env.ADMIN_CODE) admin = true;
+  registrationValidation(errors, req.body);
 
   const usernameExists = await User.findOne({ username });
   if (usernameExists)
@@ -162,7 +153,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
 // login form submittion
 router.post('/login', checkNotAuthenticated, async (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/account',
+    successRedirect: '/',
     failureRedirect: '/account/login',
     failureFlash: true,
   })(req, res, next);
@@ -222,17 +213,7 @@ router.put('/reset-password/:id', async (req, res) => {
 
   let errors = [];
 
-  if (!password || !confirmPassword)
-    errors.push('Not all fields have been entered');
-  if (password.length <= 7)
-    errors.push('Password must contain at least 8 characters');
-  if (password.search(/[a-z]/i) < 0)
-    errors.push('Password must contain at least one letter');
-  if (password.search(/[0-9]/) < 0)
-    errors.push('Password must contain at least one digit');
-  if (password !== confirmPassword) errors.push('Passwords do not match');
-  if (password === user.username || password === user.email)
-    errors.push('Password can not match your username or email');
+  passwordResetValidation(errors, req.body);
 
   // return out if there are any errors with validation
   if (errors.length > 0) {
